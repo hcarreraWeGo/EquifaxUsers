@@ -80,18 +80,6 @@ export class NavService implements OnDestroy {
   }
 
   MENUITEMS: Menu[] = [
-    {
-      title: "Simple Page",
-      icon: "home",
-      type: "sub",
-      badgeType: "light-primary",
-      badgeValue: "2",
-      active: true,
-      children: [
-        { path: "/simple-page/first-page", title: "First Page", type: "link" },
-        { path: "/simple-page/second-page", title: "Second Page", type: "link" },
-      ],
-    },
     { path: "/single-page", icon: "search", title: "Single Page",  active: false, type: "link", bookmark: true },
   ];
 

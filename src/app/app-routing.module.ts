@@ -7,7 +7,7 @@ import { content } from "./shared/routes/routes";
 const routes: Routes = [
   {
     path: '',
-    redirectTo: 'simple-page/first-page',
+    redirectTo: '/',
     pathMatch: 'full'
   },
   {

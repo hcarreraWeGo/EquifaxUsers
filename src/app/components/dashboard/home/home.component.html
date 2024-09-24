@@ -1,0 +1,34 @@
+<app-breadcrumb [title]="'Hola, como estas?'" [items]="['Dashboard']" [active_item]="'Home'"></app-breadcrumb>
+<div class="container-fluid">
+  <div class="row widget-grid">
+    <div class="col-xxl-4 col-sm-6 box-col-6">
+      <app-welcome></app-welcome>
+    </div>
+    <div class="col-xxl-auto col-xl-3 col-sm-6 box-col-6">
+      <div class="row">
+        <div class="col-xl-12">
+          <app-signature-status-chart-box [data]="purchaseRate"></app-signature-status-chart-box>
+          <div class="col-xl-12">
+            <app-signature-status-chart-box [data]="purchaseRate"></app-signature-status-chart-box>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="col-xxl-auto col-xl-3 col-sm-6 box-col-6">
+      <div class="row">
+        <div class="col-xl-12">
+          <app-signature-status-chart-box [data]="purchaseRate"></app-signature-status-chart-box>
+          <!-- <div class="col-xl-12">
+            <app-document-status-chart-box *ngIf="send" [data]="send"></app-document-status-chart-box>
+          </div> -->
+        </div>
+      </div>
+    </div>
+    <div class="col-xxl-auto col-xl-3 col-sm-6 box-col-6">
+      <div class="row">
+        <div class="col-xl-12">
+          <app-signature-status-chart-box [data]="purchaseRate"></app-signature-status-chart-box>
+        </div>
+      </div>
+    </div>
+</div>

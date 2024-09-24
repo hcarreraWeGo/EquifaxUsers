@@ -80,7 +80,7 @@ export class NavService implements OnDestroy {
   }
 
   MENUITEMS: Menu[] = [
-    { path: "/single-page", icon: "search", title: "Single Page",  active: false, type: "link", bookmark: true },
+    { path: "dashboard/home", icon: "home", title: "Home",  active: false, type: "link", bookmark: true },
   ];
 
   // Array

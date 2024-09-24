@@ -1,0 +1,9 @@
+{
+    "/api": {
+      "target": "https://enext.cloud/pruebas/links/generador",
+      "secure": false,
+      "changeOrigin": true,
+      "logLevel": "debug"
+    }
+  }
+  

@@ -1,77 +1,84 @@
+import { ApiService } from './../../../shared/services/request-signature/api.service';
 import { Component, OnInit } from '@angular/core';
-import { FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { Router } from '@angular/router';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+
 
 @Component({
   selector: 'app-request-signature',
   templateUrl: './request-signature.component.html',
   styleUrl: './request-signature.component.scss'
 })
-export class RequestSignatureComponent implements OnInit{
+export class RequestSignatureComponent implements OnInit {
+  solicitudForm: FormGroup;
+  randomTextNumber: string | null = null; 
+  constructor(private fb: FormBuilder, private apiService: ApiService) {
+    this.randomTextNumber = this.generateRandomTextNumber();
+   }
 
-  show: boolean = false;
-  showC: boolean = false;
-  registerForm: FormGroup;
-  formSubmitted: boolean = false;  // Nueva variable
-  
-  constructor(
-    private fb: FormBuilder,
-    private router: Router,
-  ) { }
-
-  ngOnInit(): void {
-    this.registerForm = this.fb.group({
-      nombre1: ['', Validators.required],
-      nombre2: ['', Validators.required],
-      apellido1: ['', Validators.required],
-      apellido2: ['', Validators.required],
-      cedula: ['', [Validators.required, Validators.pattern('^[0-9]*$')]],
-      celular: ['', [Validators.required, Validators.pattern('^[0-9]*$')]],
-      ciudad: ['', [Validators.required, Validators.pattern('^[a-zA-Z]*$')]],
-      provincia: ['', [Validators.required, Validators.pattern('^[a-zA-Z]*$')]],
+  ngOnInit() {
+    this.solicitudForm = this.fb.group({
+      primerNombre: ['', Validators.required],
+      segundoNombre: [''],
+      primerApellido: ['', Validators.required],
+      segundoApellido: [''],
+      cedula: ['', Validators.required],
+      ciudad: ['', Validators.required],
+      provincia: ['', Validators.required],
       direccion: ['', Validators.required],
-      correo: ['', [Validators.required, Validators.email]],
-      password: ['', Validators.required],
-      confirmPassword: ['', Validators.required]
-    }, { validator: this.passwordMatchValidator });
-  }
-
-  passwordMatchValidator(form: FormGroup) {
-    const password = form.get('password')?.value;
-    const confirmPassword = form.get('confirmPassword')?.value;
-    return password === confirmPassword ? null : { mismatch: true };
+      email: ['', [Validators.required, Validators.email]],
+      telefono: ['', Validators.required]
+    });
   }
 
   onSubmit() {
-    this.formSubmitted = true;
-    if (this.registerForm.valid) {
-      //console.log(this.registerForm.value);
-      this.register(this.registerForm);
+    if (this.solicitudForm.valid) {
+      const formData = this.solicitudForm.value;
+
+      // Preparamos el cuerpo para la API
+      const requestBody = {
+        "noTramite": this.randomTextNumber,
+        "documentos": [
+          {
+            "idDocumento": "documento1",
+            "nombreDocEntrada": "Contrato Oportunidad.pdf",
+            "nombreDocSalida": "signed_Contrato Oportunidad.pdf",
+            "pdfBase64": "JVBERi0xLjUNCiW1tbW1DQoxIDAgb2JqDQo8PC9UeXBlL+Pg0Kc3RhcnR4cmVmDQoxODU4MzYNCiUlRU9GDQp4cmVmDQowIDANCnRyYWlsZXINCjw8L1NpemUgMTgvUm9vdCAxIDAgUi9JbmZvIDcgMCBSL0lEWzw0NTYwOTIwNTYxRUI1OTREQTU4NzkzOThGN0NGODMwOT48NDU2MDkyMDU2MUVCNTk0REE1ODc5Mzk4RjdDRjgzMDk+XSAvUHJldiAxODU4MzYvWFJlZlN0bSAxODU1NjY+Pg0Kc3RhcnR4cmVmDQoxODYzNTMNCiUlRU9G"
+          }
+        ],
+        "firmantes": [
+          {
+            "cedula": formData.cedula,
+            "nombres": `${formData.primerNombre} ${formData.segundoNombre}`,
+            "apellidos": `${formData.primerApellido} ${formData.segundoApellido}`,
+            "correo": formData.email,
+            "provincia": formData.provincia,
+            "ciudad": formData.ciudad,
+            "direccion": formData.direccion,
+            "telefono": formData.telefono,
+            "firmas": {
+              "documento1": {
+                "firma1": {
+                  "pagina": "5",
+                  "posX": "12",
+                  "posY": "17"
+                }
+              }
+            }
+          }
+        ]
+      };
+
+      // Llamar al servicio API
+      const resp = this.apiService.sendPostEnlaceFirmaDocumento(requestBody);
+
+      console.log('Respuesta de la API:', resp);
     }
-  }
-
-  async register(form: FormGroup) {
-    const data = {
-      "nombres": `${form.get('nombre1')?.value} ${form.get('nombre2')?.value}`,
-      "cedula": form.get('cedula')?.value,
-      "apellido1": form.get('apellido1')?.value,
-      "apellido2": form.get('apellido2')?.value,
-      "direccion": form.get('direccion')?.value,
-      "telefono": form.get('celular')?.value,
-      "ciudad": form.get('ciudad')?.value,
-      "provincia": form.get('provincia')?.value,
-      "email": form.get('correo')?.value,
-      "password": form.get('password')?.value,
-    };
 
   }
 
-  showPassword() {
-    this.show = !this.show;
+  generateRandomTextNumber(): string {
+    // Genera un número aleatorio de 6 dígitos y lo convierte a string
+    const randomNumber = Math.floor(100000 + Math.random() * 900000);
+    return randomNumber.toString(); // Convertir el número a string
   }
-
-  showPasswordC() {
-    this.showC = !this.showC;
-  }
-
 }

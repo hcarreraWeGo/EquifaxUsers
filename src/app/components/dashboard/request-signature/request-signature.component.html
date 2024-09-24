@@ -1,80 +1,79 @@
-<app-breadcrumb [title]="'Solicitud de firma'" [items]="['Forms', 'Form Layout']"
-    [active_item]="'Default Form'"></app-breadcrumb>
+<app-breadcrumb [title]="'Solicitud de firma'" [items]="['Solicitud']" [active_item]="'Form Firmas'"></app-breadcrumb>
+
 <div class="container-fluid">
     <div class="row">
         <div class="col-sm-12 col-xl-6">
-            <div class="row">
-                <div class="col-sm-12">
-                    <div class="card">
-                        <div class="card-header">
-                            <h5>Ficha de Solicitud</h5>
+            <div class="card">
+                <div class="card-header">
+                    <h5>Ficha de Solicitud</h5>
+                </div>
+                <div class="card-body">
+                    <form [formGroup]="solicitudForm" (ngSubmit)="onSubmit()" class="theme-form mega-form">
+                        <h6>Datos Personales</h6>
+                        <div class="row">
+                            <div class="col-md-6 mb-3">
+                                <label class="col-form-label">Primer Nombre</label>
+                                <input class="form-control" type="text" formControlName="primerNombre" placeholder="Primer Nombre">
+                            </div>
+                            <div class="col-md-6 mb-3">
+                                <label class="col-form-label">Segundo Nombre</label>
+                                <input class="form-control" type="text" formControlName="segundoNombre" placeholder="Segundo nombre">
+                            </div>
                         </div>
-                        <div class="card-body">
-                            <form class="theme-form mega-form">
-                                <h6>Datos Personales</h6>
-                                <div class="row">
-                                    <div class="col-md-6 mb-3">
-                                        <label class="col-form-label">Primer Nombre</label>
-                                        <input class="form-control" type="text" placeholder="Primer Nombre">
-                                    </div>
-                                    <div class="col-md-6 mb-3">
-                                        <label class="col-form-label">Segundo Nombre</label>
-                                        <input class="form-control" type="text" placeholder="Segundo nombre">
-                                    </div>
-                                </div>
 
-                                <div class="row">
-                                    <div class="col-md-6 mb-3">
-                                        <label class="col-form-label">Primer Apellido</label>
-                                        <input class="form-control" type="text" placeholder="Primer Apellido">
-                                    </div>
-                                    <div class="col-md-6 mb-3">
-                                        <label class="col-form-label">Segundo Apellido</label>
-                                        <input class="form-control" type="text" placeholder="Segundo Apellido">
-                                    </div>
-                                </div>
-                                <div class="row">
-                                    <div class="col-md-6 mb-3">
-                                        <label class="col-form-label">Cédula</label>
-                                        <input class="form-control" type="text" placeholder="Cédula">
-                                    </div>
-                                    <div class="col-md-6 mb-3">
-                                        <label class="col-form-label">Código Dactilar</label>
-                                        <input class="form-control" type="text" placeholder="Código Dactilar">
-                                    </div>
-                                </div>
+                        <div class="row">
+                            <div class="col-md-6 mb-3">
+                                <label class="col-form-label">Primer Apellido</label>
+                                <input class="form-control" type="text" formControlName="primerApellido" placeholder="Primer Apellido">
+                            </div>
+                            <div class="col-md-6 mb-3">
+                                <label class="col-form-label">Segundo Apellido</label>
+                                <input class="form-control" type="text" formControlName="segundoApellido" placeholder="Segundo Apellido">
+                            </div>
+                        </div>
 
-                                <hr class="mt-4 mb-4">
-                                <h6>Ubicación</h6>
-                                <div class="mb-3">
-                                    <label class="col-form-label">Ciudad</label>
-                                    <input class="form-control" type="text" placeholder="Ciudad">
-                                </div>
-                                <div class="mb-3">
-                                    <label class="col-form-label">Provincia</label>
-                                    <input class="form-control" type="text" placeholder="Provincia">
-                                </div>
-                                <div class="mb-3">
-                                    <label class="col-form-label">Dirección</label>
-                                    <input class="form-control" type="text" placeholder="Dirección">
-                                </div>
-                                <hr class="mt-4 mb-4">
-                                <h6 class="pb-4">Contacto</h6>
-                                <div class="mb-3">
-                                    <label class="col-form-label">Email</label>
-                                    <input class="form-control" type="text" placeholder="Email">
-                                </div>
-                                <div class="mb-3">
-                                    <label class="col-form-label">Número de Celular</label>
-                                    <input class="form-control" type="text" placeholder="Número de Celular">
-                                </div>
-                            </form>
+                        <div class="row">
+                            <div class="col-md-6 mb-3">
+                                <label class="col-form-label">Cédula</label>
+                                <input class="form-control" type="text" formControlName="cedula" placeholder="Cédula">
+                            </div>
                         </div>
-                        <div class="card-footer text-end">
-                            <button class="btn btn-primary me-1">Submit</button>
-                            <button class="btn btn-secondary">Cancel</button>
+
+                        <hr class="mt-4 mb-4">
+                        <h6>Ubicación</h6>
+                        <div class="row">
+                            <div class="col-md-6 mb-3">
+                                <label class="col-form-label">Ciudad</label>
+                                <input class="form-control" type="text" formControlName="ciudad" placeholder="Ciudad">
+                            </div>
+                            <div class="col-md-6 mb-3">
+                                <label class="col-form-label">Provincia</label>
+                                <input class="form-control" type="text" formControlName="provincia" placeholder="Provincia">
+                            </div>
                         </div>
-                    </div>
+
+                        <div class="row">
+                            <div class="col-md-6 mb-3">
+                                <label class="col-form-label">Dirección</label>
+                                <input class="form-control" type="text" formControlName="direccion" placeholder="Dirección">
+                            </div>
+                        </div>
+
+                        <hr class="mt-4 mb-4">
+                        <h6>Contacto</h6>
+                        <div class="row">
+                            <div class="col-md-6 mb-3">
+                                <label class="col-form-label">Email</label>
+                                <input class="form-control" type="text" formControlName="email" placeholder="Email">
+                            </div>
+                            <div class="col-md-6 mb-3">
+                                <label class="col-form-label">Número de Celular</label>
+                                <input class="form-control" type="text" formControlName="telefono" placeholder="Número de Celular">
+                            </div>
+                        </div>
+
+                        <button type="submit" class="btn btn-primary me-1">Enviar</button>
+                    </form>
                 </div>
             </div>
         </div>

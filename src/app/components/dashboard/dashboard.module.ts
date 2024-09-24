@@ -1,3 +1,5 @@
+import { RequestSignatureComponent } from './request-signature/request-signature.component';
+import { ReportsComponent } from './reports/reports.component';
 import { SignatureStatusChartBoxComponent } from './home/signature-status-chart-box/signature-status-chart-box.component';
 import { WelcomeComponent } from './home/welcome/welcome.component';
 import { NgApexchartsModule } from 'ng-apexcharts';
@@ -11,7 +13,9 @@ import { HomeComponent } from './home/home.component';
     declarations: [
         HomeComponent,
         WelcomeComponent,
-        SignatureStatusChartBoxComponent
+        SignatureStatusChartBoxComponent,
+        ReportsComponent,
+        RequestSignatureComponent
         
         
 

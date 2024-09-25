@@ -1,0 +1,81 @@
+:host {
+  position: fixed;
+  top: 20px;
+  right: 20px;
+  z-index: 1050;
+  max-width: 350px;
+
+  @media (max-width: 768px) { 
+    top: 10px;
+    right: 10px;
+    max-width: 100%; /* La tarjeta ocupará todo el ancho de la pantalla en móviles */
+    left: 10px; /* Añade un pequeño margen a la izquierda para móviles */
+  }
+
+  @media (max-width: 576px) {
+    top: 5px;
+    right: 5px;
+    left: 5px; /* Márgenes más pequeños para pantallas muy pequeñas */
+  }
+}
+
+.card {
+  margin: 0;
+  border-radius: 12px;
+  overflow: hidden;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+
+  &.animate-card {
+    transform: translateY(-10px);
+  }
+
+  &:hover {
+    transform: translateY(0);
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+  }
+
+  @media (max-width: 768px) {
+    border-radius: 8px; /* Redondeo un poco menor en móviles */
+    box-shadow: none; /* Elimina la sombra en móviles para simplificar el diseño */
+  }
+}
+
+.card-header {
+  background-color: #007bff;
+  color: white;
+  display: flex;
+  justify-content: space-between;
+  padding: 10px 15px;
+  font-weight: bold;
+  border-bottom: 1px solid #007bff;
+
+  @media (max-width: 768px) {
+    padding: 8px 12px; /* Ajusta el padding en pantallas pequeñas */
+    font-size: 16px; /* Reduce el tamaño de la fuente */
+  }
+}
+
+.card-body {
+  background-color: #f8f9fa;
+  padding: 15px;
+
+  .alert-item {
+    margin-bottom: 10px;
+    animation: fadeIn 0.5s ease;
+  }
+
+  @media (max-width: 768px) {
+    padding: 12px; /* Reduce el padding interno */
+  }
+}
+
+@keyframes fadeIn {
+  0% {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}

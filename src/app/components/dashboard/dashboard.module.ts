@@ -8,6 +8,8 @@ import { DashboardRoutingModule } from './dashboard-routing.module';
 import { CommonModule } from "@angular/common";
 import { NgModule } from "@angular/core";
 import { HomeComponent } from './home/home.component';
+import { AlertComponent } from 'src/app/shared/components/alert/alert.component';
+import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 
 @NgModule({
     declarations: [
@@ -15,12 +17,13 @@ import { HomeComponent } from './home/home.component';
         WelcomeComponent,
         SignatureStatusChartBoxComponent,
         ReportsComponent,
-        RequestSignatureComponent
+        RequestSignatureComponent,
+        AlertComponent
         
         
 
     ],
-    imports:[CommonModule, DashboardRoutingModule,SharedModule,NgApexchartsModule],
+    imports:[CommonModule, DashboardRoutingModule,SharedModule,NgApexchartsModule,NgbModule],
     exports:[]
 
 })

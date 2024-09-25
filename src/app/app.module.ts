@@ -1,3 +1,4 @@
+import { AlertComponent } from './shared/components/alert/alert.component';
 import { HttpClient, HttpClientModule } from '@angular/common/http';
 import { NgModule } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
@@ -29,6 +30,7 @@ export function HttpLoaderFactory(http: HttpClient) {
   declarations: [
     AppComponent,
     LoginComponent,
+    
   ],
   imports: [
     BrowserModule,

@@ -19,7 +19,7 @@ export class AlertComponent {
     this.alertService.alert$.subscribe(alert => {
       this.alerts.push(alert);
       // Configurar un temporizador si deseas que la alerta desaparezca automáticamente después de cierto tiempo
-      //setTimeout(() => this.close(alert), 5000); // Ejemplo de cierre automático en 5 segundos
+      setTimeout(() => this.close(alert), 5000); // Ejemplo de cierre automático en 5 segundos
     });
   }
 

@@ -4,7 +4,6 @@
 
 export const environment = {
   production: true,
-  // URL base de la API para desarrollo
   apiUrl: 'http://3.9.236.139:3005/api/',  
   enviocorreo:'http://3.141.185.126:81/api/correoLink',
   authUsername: 'FIRMADORV3',

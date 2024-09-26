@@ -10,5 +10,9 @@ export class HomeComponent implements OnInit{
   
   constructor(calendar: NgbCalendar) {}
   public purchaseRate = data.purchaseRate
+  public documentoFirmado = data.documentoFirmado;
+  public clientesActivos = data.clienteactivo;
+  public identidadValida = data.identidadValidad;
+  public documentoNA = data.documentosNa;
   async ngOnInit(): Promise<void> {}
 }

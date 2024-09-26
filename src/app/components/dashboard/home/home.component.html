@@ -7,9 +7,9 @@
     <div class="col-xxl-auto col-xl-3 col-sm-6 box-col-6">
       <div class="row">
         <div class="col-xl-12">
-          <app-signature-status-chart-box [data]="purchaseRate"></app-signature-status-chart-box>
+          <app-signature-status-chart-box *ngIf="clientesActivos" [data]="clientesActivos"></app-signature-status-chart-box>
           <div class="col-xl-12">
-            <app-signature-status-chart-box [data]="purchaseRate"></app-signature-status-chart-box>
+            <app-signature-status-chart-box *ngIf="documentoNA" [data]="documentoNA"></app-signature-status-chart-box>
           </div>
         </div>
       </div>
@@ -17,17 +17,16 @@
     <div class="col-xxl-auto col-xl-3 col-sm-6 box-col-6">
       <div class="row">
         <div class="col-xl-12">
-          <app-signature-status-chart-box [data]="purchaseRate"></app-signature-status-chart-box>
-          <!-- <div class="col-xl-12">
-            <app-document-status-chart-box *ngIf="send" [data]="send"></app-document-status-chart-box>
-          </div> -->
+          <app-signature-status-chart-box  *ngIf="documentoFirmado" [data]="documentoFirmado"></app-signature-status-chart-box>
+          
         </div>
       </div>
     </div>
     <div class="col-xxl-auto col-xl-3 col-sm-6 box-col-6">
       <div class="row">
         <div class="col-xl-12">
-          <app-signature-status-chart-box [data]="purchaseRate"></app-signature-status-chart-box>
+          <app-signature-status-chart-box *ngIf="identidadValida"[data]="identidadValida"></app-signature-status-chart-box>
+          
         </div>
       </div>
     </div>

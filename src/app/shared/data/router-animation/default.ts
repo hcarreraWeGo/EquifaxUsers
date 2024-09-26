@@ -907,3 +907,33 @@ export let purchaseRate = {
   font: "success",
   pr: "+70",
 };
+
+export let clienteactivo = {
+  icon: "rate",
+  counter: "10",
+  name: "Clientes Activos",
+  font: "success",
+  pr: "+70",
+};
+export let documentoFirmado = {
+  icon: "rate",
+  counter: "30",
+  name: "Documentos Firmados",
+  font: "success",
+  pr: "+70",
+};
+export let identidadValidad = {
+  icon: "rate",
+  counter: "30",
+  name: "Identidades Validas",
+  font: "success",
+  pr: "+70",
+};
+
+export let documentosNa = {
+  icon: "rate",
+  counter: "2",
+  name: "Documentos no autorizados",
+  font: "warning",
+  pr: "+70",
+};

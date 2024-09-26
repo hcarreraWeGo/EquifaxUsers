@@ -82,7 +82,9 @@ export class NavService implements OnDestroy {
   MENUITEMS: Menu[] = [
     { path: "dashboard/home", icon: "home", title: "Home",  active: false, type: "link", bookmark: true },
     { path: "dashboard/solicitar-firma", icon: "user", title: "Solicitar Firma",  active: false, type: "link", bookmark: true },
+    { path: "dashboard/verificar-identidad", icon: "search", title: "Verificar Identidad",  active: false, type: "link", bookmark: true },
     { path: "dashboard/reportes", icon: "file", title: "Reportes",  active: false, type: "link", bookmark: true },
+    
   ];
 
   // Array

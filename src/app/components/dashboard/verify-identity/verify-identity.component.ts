@@ -1,16 +1,16 @@
-import { AlertService } from './../../../shared/components/alert/alert.service';
-import { ApiService } from './../../../shared/services/request-signature/api.service';
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { AlertService } from 'src/app/shared/components/alert/alert.service';
+import { ApiService } from 'src/app/shared/services/request-signature/api.service';
 import { environment } from 'src/environments/environment';
 
-
 @Component({
-  selector: 'app-request-signature',
-  templateUrl: './request-signature.component.html',
-  styleUrl: './request-signature.component.scss'
+  selector: 'app-verify-identity',
+  templateUrl: './verify-identity.component.html',
+  styleUrl: './verify-identity.component.scss'
 })
-export class RequestSignatureComponent implements OnInit {
+export class VerifyIdentityComponent implements OnInit{
+
   solicitudForm: FormGroup;
   randomTextNumber: string | null = null;
   private username = environment.authUsername;  // Usuario de la autenticación
@@ -42,43 +42,26 @@ export class RequestSignatureComponent implements OnInit {
   
       // Preparamos el cuerpo para la API
       const requestBody = {
-        "url": "https://enext.cloud/pruebas/links/generador/api/",
+        "url": "https://enext.cloud/firmador/links/generador/api/",
         "method": "POST",
         "headers": {
-          "Authorization": "Basic RklSTUFET1JWMzpzdXBlcjk4Nw==",
+          "Authorization": "Basic YmlvbWV0cmlhOjEyMzQ1",
           "Content-Type": "application/json"
         },
         "body": {
           "noTramite": this.randomTextNumber,
-          "documentos": [
-            {
-              "idDocumento": "documento1",
-              "nombreDocEntrada": "Contrato Oportunidad.pdf",
-              "nombreDocSalida": "signed_Contrato Oportunidad.pdf",
-              "pdfBase64": "JVBERi0xLjUNCiW1tbW1DQoxIDAgb2JqDQo8PC9UeXBlL+Pg0Kc3RhcnR4cmVmDQoxODU4MzYNCiUlRU9GDQp4cmVmDQowIDANCnRyYWlsZXINCjw8L1NpemUgMTgvUm9vdCAxIDAgUi9JbmZvIDcgMCBSL0lEWzw0NTYwOTIwNTYxRUI1OTREQTU4NzkzOThGN0NGODMwOT48NDU2MDkyMDU2MUVCNTk0REE1ODc5Mzk4RjdDRjgzMDk+XSAvUHJldiAxODU4MzYvWFJlZlN0bSAxODU1NjY+Pg0Kc3RhcnR4cmVmDQoxODYzNTMNCiUlRU9G"
-            }
-          ],
-          "firmantes": [
-            {
-              "cedula": formData.cedula,
-              "nombres": `${formData.primerNombre} ${formData.segundoNombre}`,
-              "apellidos": `${formData.primerApellido} ${formData.segundoApellido}`,
-              "correo": formData.email,
-              "provincia": formData.provincia,
-              "ciudad": formData.ciudad,
-              "direccion": formData.direccion,
-              "telefono": formData.telefono,
-              "firmas": {
-                "documento1": {
-                  "firma1": {
-                    "pagina": "5",
-                    "posX": "12",
-                    "posY": "17"
-                  }
-                }
-              }
-            }
-          ]
+          "certificado":{
+            "perfil":"001",
+            "cedula": formData.cedula,
+            "nombres": `${formData.primerNombre} ${formData.segundoNombre}`,
+            "apellido1": formData.primerApellido,
+            "apellido2": formData.segundoApellido,
+            "direccion": formData.direccion,
+            "telefono": formData.telefono,
+            "ciudad": formData.ciudad,
+            "email": formData.email,
+            "provincia": formData.provincia,
+          }
         }
       };
   
@@ -89,7 +72,7 @@ export class RequestSignatureComponent implements OnInit {
         //console.log("vercodigo",resp.codigo);
         if (resp.codigo === "1"){
           const data={
-            "link":resp.linkPrimerFirmante,
+            "link":resp.link,
             "correo":formData.email
           }
 
@@ -117,4 +100,5 @@ export class RequestSignatureComponent implements OnInit {
     const randomNumber = Math.floor(100000 + Math.random() * 900000);
     return randomNumber.toString(); // Convertir el número a string
   }
+
 }

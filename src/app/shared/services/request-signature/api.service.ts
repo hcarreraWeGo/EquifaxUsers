@@ -20,7 +20,7 @@ export class ApiService {
     return this.http.get<any>(this.apiUrl);  // Utiliza la URL base del environment
   }
 
-  sendPostEnlaceFirmaDocumento(data: any): Promise<any> {
+  sendPostApiGenerica(data: any): Promise<any> {
     const headers = new HttpHeaders({
       'Content-Type': 'application/json',
     });

@@ -1,3 +1,4 @@
+import { VerifyIdentityComponent } from './verify-identity/verify-identity.component';
 import { RequestSignatureComponent } from './request-signature/request-signature.component';
 import { ReportsComponent } from './reports/reports.component';
 import { SignatureStatusChartBoxComponent } from './home/signature-status-chart-box/signature-status-chart-box.component';
@@ -18,9 +19,8 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
         SignatureStatusChartBoxComponent,
         ReportsComponent,
         RequestSignatureComponent,
-        AlertComponent
-        
-        
+        AlertComponent,
+        VerifyIdentityComponent,
 
     ],
     imports:[CommonModule, DashboardRoutingModule,SharedModule,NgApexchartsModule,NgbModule],

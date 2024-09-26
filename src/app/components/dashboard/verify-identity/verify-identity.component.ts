@@ -13,8 +13,6 @@ export class VerifyIdentityComponent implements OnInit{
 
   solicitudForm: FormGroup;
   randomTextNumber: string | null = null;
-  private username = environment.authUsername;  // Usuario de la autenticación
-  private password = environment.authPassword;  // Contraseña de la autenticación
 
 
   constructor(private fb: FormBuilder, private apiService: ApiService,private alertService: AlertService) {

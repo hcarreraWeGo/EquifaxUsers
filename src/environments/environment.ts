@@ -4,10 +4,13 @@
 
 export const environment = {
   production: false,
-  apiUrl: 'http://3.9.236.139:3005/api/',  // URL base de la API para desarrollo
+  // URL base de la API para desarrollo
+  apiUrl: 'http://3.9.236.139:3005/api/',  
   enviocorreo:'http://3.141.185.126:81/api/correoLink',
-  authUsername: 'FIRMADORV3',  // Usuario para autenticación generacion de link
-  authPassword: 'super987'  // Contraseña para autenticación generacion de link
+  // Usuario para autenticación generacion de link
+  authUsername: 'FIRMADORV3', 
+  // Contraseña para autenticación generacion de link 
+  authPassword: 'super987'  
 };
 
 

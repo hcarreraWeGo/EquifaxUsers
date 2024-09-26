@@ -9,7 +9,7 @@ import { Subject } from 'rxjs';
 })
 export class ApiService {
 
-  private apiUrl = environment.apiUrl;  // URL base tomada del archivo de entorno
+  private apiUrl = environment.apiUrl;  
   private envioCorreo = environment.enviocorreo;
   constructor(private http: HttpClient) {}
   private responseSubject = new Subject<any>();

@@ -28,25 +28,26 @@ body {
         input {
           background-color: transparent;
           border: 1px solid rgba($white , 0.3);
+          color: $white;
         }
       }
       button{
         background-color: $white;
-        color:  $dark-card-background;
+        color: $dark-card-background;
       }
     }
 
-    .NgxEditor__Dropdown--Active{
+    .NgxEditor__Dropdown--Active {
       background-color: $dark-card-background;
       color: $white;
     }
 
-    .NgxEditor__MenuItem--Active{
+    .NgxEditor__MenuItem--Active {
       background-color: $dark-card-background;
       color: $white;
     }
 
-    .NgxEditor__Dropdown--Selected{
+    .NgxEditor__Dropdown--Selected {
       background-color: $dark-card-background;
       color: $white;
     }
@@ -81,12 +82,12 @@ body {
       border-color: rgba($white, 0.2);
     }
 
-    .ae-font .ae-picker-options .ae-picker-item.selected{
+    .ae-font .ae-picker-options .ae-picker-item.selected {
       color: $white;
       background-color: $dark-body-background !important;
     }
-    
-    .ae-font .ae-picker-label:before{
+
+    .ae-font .ae-picker-label:before {
       background: $dark-body-background ;
     }
 

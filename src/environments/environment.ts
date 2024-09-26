@@ -3,13 +3,11 @@
 // The list of file replacements can be found in `angular.json`.
 
 export const environment = {
-  production: false,
+  production: true,
   // URL base de la API para desarrollo
   apiUrl: 'http://3.9.236.139:3005/api/',  
   enviocorreo:'http://3.141.185.126:81/api/correoLink',
-  // Usuario para autenticación generacion de link
-  authUsername: 'FIRMADORV3', 
-  // Contraseña para autenticación generacion de link 
+  authUsername: 'FIRMADORV3',  
   authPassword: 'super987'  
 };
 

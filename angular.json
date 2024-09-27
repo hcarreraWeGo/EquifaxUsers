@@ -9,14 +9,8 @@
         "@schematics/angular:component": {
           "style": "scss",
           "skipTests": true
+
         },
-         "architect": {
-            "serve": {
-              "options": {
-                "port": 4201
-              }
-            }
-          },
         "@schematics/angular:class": {
           "skipTests": true
         },

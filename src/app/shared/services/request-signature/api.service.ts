@@ -9,9 +9,9 @@ import { Subject } from 'rxjs';
 })
 export class ApiService {
 
-  private apiUrl = environment.apiUrl;  
+  private apiUrl = environment.apiUrl;
   private envioCorreo = environment.enviocorreo;
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient) { }
   private responseSubject = new Subject<any>();
   response$ = this.responseSubject.asObservable();
 
@@ -24,7 +24,7 @@ export class ApiService {
     const headers = new HttpHeaders({
       'Content-Type': 'application/json',
     });
-   
+
     // Retorna una Promise
     return new Promise((resolve, reject) => {
       this.http.post(this.apiUrl + 'generica', data, { headers })
@@ -41,23 +41,25 @@ export class ApiService {
         );
     });
   }
-  
+
   envioLinkCorreo(data: any): Promise<any> {
     const headers = new HttpHeaders({
       'Content-Type': 'application/json',
     });
-  
-    return this.http.post(this.envioCorreo, data, { headers, responseType: 'text' })
-      .toPromise()
-      .then(response => {
-        // Intentar parsear manualmente
-        const jsonResponse = response.replace(/([a-zA-Z0-9_]+):/g, '"$1":'); // Pone las claves entre comillas
-        return JSON.parse(jsonResponse);
-      })
-      .catch(error => {
-        console.error('Error al enviar el correo:', error);
-        throw error;
+
+    return new Promise((resolve, reject) => {
+      return this.http.post(this.envioCorreo, data, { headers })
+        .toPromise()
+        .then(response => {
+          // Resuelve la Promise con la respuesta
+          console.log('Respuesta envio de correo:', response);
+          resolve(response);
+        }, error => {
+          console.error('Error details envio de correo:', error);
+          reject(error); // Rechaza la Promise en caso de error
+        }
+        );
       });
-  }
+    }
   
 }

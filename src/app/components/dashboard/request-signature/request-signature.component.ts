@@ -26,9 +26,9 @@ export class RequestSignatureComponent implements OnInit {
       primerApellido: ['', Validators.required],
       segundoApellido: [''],
       cedula: ['', Validators.required],
-      ciudad: ['', Validators.required],
-      provincia: ['', Validators.required],
-      direccion: ['', Validators.required],
+      // ciudad: ['', Validators.required],
+      // provincia: ['', Validators.required],
+      // direccion: ['', Validators.required],
       email: ['', [Validators.required, Validators.email]],
       telefono: ['', Validators.required]
     });
@@ -62,9 +62,9 @@ export class RequestSignatureComponent implements OnInit {
               "nombres": `${formData.primerNombre} ${formData.segundoNombre}`,
               "apellidos": `${formData.primerApellido} ${formData.segundoApellido}`,
               "correo": formData.email,
-              "provincia": formData.provincia,
-              "ciudad": formData.ciudad,
-              "direccion": formData.direccion,
+              "provincia": "pichincha",
+              "ciudad": "quito",
+              "direccion": "dsds",
               "telefono": formData.telefono,
               "firmas": {
                 "documento1": {
@@ -93,7 +93,7 @@ export class RequestSignatureComponent implements OnInit {
 
           //console.log("Datos a enviar ",data);
           var envio = await this.apiService.envioLinkCorreo(data);
-          this.alertService.showAlert(envio.return, 'success');
+          this.alertService.showAlert('Correo enviado', 'success');
           //console.log("Respuesta de envio de correo",envio.return);
           // Resetear el formulario
           this.solicitudForm.reset(); // Reinicia los campos del formulario

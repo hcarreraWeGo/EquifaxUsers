@@ -40,7 +40,7 @@ export class RequestSignatureComponent implements OnInit {
   
       // Preparamos el cuerpo para la API
       const requestBody = {
-        "url": "https://enext.cloud/pruebas/links/generador/api/",
+        "url": "https://enext.cloud/pre_equifax/links/generador/api/",
         "method": "POST",
         "headers": {
           "Authorization": "Basic RklSTUFET1JWMzpzdXBlcjk4Nw==",

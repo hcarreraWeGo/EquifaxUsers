@@ -26,9 +26,9 @@ export class RequestSignatureComponent implements OnInit {
       primerApellido: ['', Validators.required],
       segundoApellido: [''],
       cedula: ['', Validators.required],
-      // ciudad: ['', Validators.required],
-      // provincia: ['', Validators.required],
-      // direccion: ['', Validators.required],
+      ciudad: ['', Validators.required],
+      provincia: ['', Validators.required],
+      direccion: ['', Validators.required],
       email: ['', [Validators.required, Validators.email]],
       telefono: ['', Validators.required]
     });
@@ -62,9 +62,9 @@ export class RequestSignatureComponent implements OnInit {
               "nombres": `${formData.primerNombre} ${formData.segundoNombre}`,
               "apellidos": `${formData.primerApellido} ${formData.segundoApellido}`,
               "correo": formData.email,
-              "provincia": "pichincha",
-              "ciudad": "quito",
-              "direccion": "dsds",
+              "provincia": formData.provincia,
+              "ciudad": formData.ciudad,
+              "direccion": formData.direccion,
               "telefono": formData.telefono,
               "firmas": {
                 "documento1": {

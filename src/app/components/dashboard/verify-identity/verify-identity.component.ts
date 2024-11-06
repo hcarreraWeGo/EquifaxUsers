@@ -26,9 +26,9 @@ export class VerifyIdentityComponent implements OnInit{
       primerApellido: ['', Validators.required],
       segundoApellido: [''],
       cedula: ['', Validators.required],
-      ciudad: ['', Validators.required],
-      provincia: ['', Validators.required],
-      direccion: ['', Validators.required],
+      // ciudad: ['', Validators.required],
+      // provincia: ['', Validators.required],
+      // direccion: ['', Validators.required],
       email: ['', [Validators.required, Validators.email]],
       telefono: ['', Validators.required]
     });
@@ -54,11 +54,11 @@ export class VerifyIdentityComponent implements OnInit{
             "nombres": `${formData.primerNombre} ${formData.segundoNombre}`,
             "apellido1": formData.primerApellido,
             "apellido2": formData.segundoApellido,
-            "direccion": formData.direccion,
+            "direccion": "quitumbe",
             "telefono": formData.telefono,
-            "ciudad": formData.ciudad,
+            "ciudad": "quito",
             "email": formData.email,
-            "provincia": formData.provincia,
+            "provincia": "pichincha",
           }
         }
       };
@@ -76,7 +76,7 @@ export class VerifyIdentityComponent implements OnInit{
 
           //console.log("Datos a enviar ",data);
           var envio = await this.apiService.envioLinkCorreo(data);
-          this.alertService.showAlert(envio.return, 'success');
+          this.alertService.showAlert("proceso exitoso", 'success');
           //console.log("Respuesta de envio de correo",envio.return);
           // Resetear el formulario
           this.solicitudForm.reset(); // Reinicia los campos del formulario

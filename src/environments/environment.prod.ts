@@ -4,5 +4,6 @@ export const environment = {
   apiUrlBase:'http://localhost:3006/',
   enviocorreo:'http://3.141.185.126:81/api/correoLink',
   authUsername: 'FIRMADORV3',
-  authPassword: 'super987'
+  authPassword: 'super987',
+  secretLocalStorage:'%_enext_%_Flow%',
 };

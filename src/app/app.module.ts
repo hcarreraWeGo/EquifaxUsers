@@ -21,6 +21,8 @@ import { AppComponent } from './app.component';
 import { LoginComponent } from './auth/login/login.component';
 
 import { OverlayModule } from '@angular/cdk/overlay';
+import { StorageService } from './shared/services/storage';
+import { LocalStorageService } from './shared/services/local.storage.service';
 
 export function HttpLoaderFactory(http: HttpClient) {
   return new TranslateHttpLoader(http, "./assets/i18n/", ".json");
@@ -56,7 +58,7 @@ export function HttpLoaderFactory(http: HttpClient) {
     // for Core use:
     LoadingBarModule
   ],
-  providers: [CookieService],
+  providers: [CookieService,StorageService,LocalStorageService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

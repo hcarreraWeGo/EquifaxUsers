@@ -4,50 +4,53 @@
       <div class="login-card login-dark">
         <div>
           <div>
-            <a class="logo" routerLink="/">
-              <img class="img-fluid for-light" src="assets/images/logo/logo.png" alt="looginpage" />
-              <img class="img-fluid for-dark" src="assets/images/logo/logo_dark.png" alt="looginpage" />
+            <a class="logo">
+              <img class="img-fluid for-light" src="assets/images/logo/logo.svg" alt="looginpage" />
+              <img class="img-fluid for-dark" src="assets/images/logo/logo_dark.svg" alt="looginpage" />
             </a>
           </div>
           <div class="login-main">
             <form class="theme-form" [formGroup]="loginForm">
-              <h4>Sign in to account</h4>
-              <p>Enter your email & password to login</p>
+              <h4>
+                Iniciar sesión en la cuenta</h4>
+              <p>Ingrese su correo electrónico y contraseña para iniciar sesión</p>
               <div class="form-group">
-                <label class="col-form-label">Email Address</label>
-                <input class="form-control" type="email" required="" placeholder="app@yourmail.com" formControlName="email" />
-                <div *ngIf="loginForm.controls.email.touched && loginForm.controls.email.errors?.required" class="text text-danger mt-1">Email is required</div>
-                <div *ngIf="loginForm.controls.email.touched && loginForm.controls.email.errors?.email" class="text text-danger mt-1">Invalid Email</div>
+                <label class="col-form-label">Dirección de correo electrónico</label>
+                <input class="form-control" type="email" required="" placeholder="app@yourmail.com"
+                  formControlName="email" />
+                <div *ngIf="loginForm.controls.email.touched && loginForm.controls.email.errors?.required"
+                  class="text text-danger mt-1">Dirección de correo electrónico es requerida</div>
+                <div *ngIf="loginForm.controls.email.touched && loginForm.controls.email.errors?.email"
+                  class="text text-danger mt-1">Dirección de correo electrónico no válida</div>
               </div>
               <div class="form-group">
-                <label class="col-form-label">Password</label>
-                <input class="form-control" [type]="show ? 'text' : 'password'" formControlName="password" required="" placeholder="*********" />
+                <label class="col-form-label">Contraseña</label>
+                <input class="form-control" [type]="show ? 'text' : 'password'" formControlName="password" required=""
+                  placeholder="*********" />
                 <div class="show-hide" (click)="showPassword()" *ngIf="!show"><span class="show"></span></div>
                 <div class="show-hide" (click)="showPassword()" *ngIf="show"><span class="Hide"></span></div>
-                <div *ngIf="loginForm.controls.password.touched && loginForm.controls.password.errors?.required" class="text text-danger mt-1">Password is required</div>
+                <div *ngIf="loginForm.controls.password.touched && loginForm.controls.password.errors?.required"
+                  class="text text-danger mt-1">Se requiere contraseña</div>
               </div>
               <div class="form-group mb-0">
-                <div class="checkbox p-0">
-                  <input id="checkbox1" type="checkbox" />
-                  <label class="text-muted" for="checkbox1">Remember password</label>
+                <div class="d-flex justify-content-between align-items-center">
+                  <div class="checkbox p-0">
+                    <input id="checkbox1" type="checkbox"/>
+                    <label class="text-primary" for="checkbox1"><font color="black" size="2">Recordar contraseña</font></label>
+                  </div>
+                  <a [routerLink]="'/authentication/forgot-password'" class="link"><font size="2">¿Has olvidado tu contraseña?</font></a>
                 </div>
-                <a href="javascript:void(0)" class="link">Forgot password?</a>
                 <div class="text-end mt-3">
-                  <button class="btn btn-primary d-block w-100" [disabled]="!loginForm.valid" (click)="login()" type="button"><span>Sign in</span></button>
-                </div>
-              </div>
-              <h6 class="text-muted mt-4 or">Or Sign in with</h6>
-              <div class="social mt-4">
-                <div class="btn-showcase">
-                  <a class="btn btn-light" target="_blank"> <app-feather-icons [icon]="'log-in'" class="txt-google"></app-feather-icons>Google + </a>
-                  <a class="btn btn-light" target="_blank"> <app-feather-icons [icon]="'facebook'" class="txt-fb"></app-feather-icons>Facebook </a>
-                  <a class="btn btn-light" target="_blank"> <app-feather-icons [icon]="'twitter'" class="txt-twitter"></app-feather-icons>twitter </a>
+                  <button class="btn btn-primary d-block w-100" (click)="login()" type="button">
+                    <span>Iniciar sesión</span>
+                  </button>
                 </div>
               </div>
               <p class="mt-4 mb-0">
-                Don't have account?
-                <a href="javascript:void(0)" class="ms-2">Create Account</a>
+                No tengo Cuenta?
+                <a [routerLink]="'/auth/register/'" class="ms-2">Crear Cuenta</a>
               </p>
+
             </form>
           </div>
         </div>

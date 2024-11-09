@@ -30,6 +30,7 @@ import { SwiperComponent } from './components/header/elements/swiper/swiper.comp
 import { SvgIconComponent } from "./components/svg-icon/svg-icon.component";
 import { LayoutService } from "./services/layout.service";
 import { NavService } from "./services/nav.service";
+import { AlertNComponent } from "./components/alert-n/alert-n.component";
 
 @NgModule({
   declarations: [
@@ -51,6 +52,8 @@ import { NavService } from "./services/nav.service";
     MyAccountComponent,
     SvgIconComponent,
     SwiperComponent,
+    AlertNComponent
+    
   ],
   imports: [
     
@@ -59,12 +62,13 @@ import { NavService } from "./services/nav.service";
     FormsModule,
     ReactiveFormsModule,
     NgbModule,
+    
     // DragulaModule.forRoot(),
     TranslateModule.forRoot(),
     SwiperModule],
   providers: [NavService, LayoutService, DecimalPipe],
   exports: [NgbModule, FormsModule, ReactiveFormsModule,
     TranslateModule,
-    LoaderComponent, BreadcrumbComponent, FeatherIconsComponent, TapToTopComponent, SvgIconComponent, SwiperModule],
+    LoaderComponent, BreadcrumbComponent, FeatherIconsComponent, TapToTopComponent, SvgIconComponent, SwiperModule,AlertNComponent],
 })
 export class SharedModule {}

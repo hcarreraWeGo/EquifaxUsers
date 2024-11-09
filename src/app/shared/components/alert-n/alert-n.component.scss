@@ -1,0 +1,19 @@
+.alert-container {
+    position: fixed;
+    top: 10px;
+    right: 10px;
+    width: 300px; /* Ajusta este valor según lo que necesites */
+    max-width: 100%;
+    z-index: 1050; /* Asegúrate de que esté sobre otros elementos */
+}
+
+.alert-item {
+    margin-bottom: 10px; /* Espaciado entre las alertas */
+}
+
+@media (max-width: 768px) {
+    .alert-container {
+        width: 90%;
+        right: 5%;
+    }
+}

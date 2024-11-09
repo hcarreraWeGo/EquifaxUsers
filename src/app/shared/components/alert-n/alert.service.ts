@@ -16,5 +16,6 @@ export class AlertServiceN {
   showAlert(message: string, type: 'success' | 'danger' | 'info') {
     const alert: Alert = { message, type };
     this.alertSubject.next(alert);
+    console.log("si estoy aqui");
   }
 }

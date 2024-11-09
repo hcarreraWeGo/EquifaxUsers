@@ -32,6 +32,7 @@ export class BaseService {
 
   public handleError(error: HttpErrorResponse): Observable<never> {
     this.alertService.showAlert(error.error.message, "danger");
+    console.log(error.error.message, "danger");
     return throwError(() => new Error(error.message));
   }
 }

@@ -32,6 +32,7 @@ export function HttpLoaderFactory(http: HttpClient) {
   declarations: [
     AppComponent,
     LoginComponent,
+   
     
   ],
   imports: [
@@ -43,6 +44,7 @@ export function HttpLoaderFactory(http: HttpClient) {
     AppRoutingModule,
     HttpClientModule,
     NgbModule,
+    
     TranslateModule.forRoot({
       loader: {
         provide: TranslateLoader,

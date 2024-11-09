@@ -1,3 +1,4 @@
+import { AlertNComponent } from './../../shared/components/alert-n/alert-n.component';
 import { VerifyIdentityComponent } from './verify-identity/verify-identity.component';
 import { RequestSignatureComponent } from './request-signature/request-signature.component';
 import { ReportsComponent } from './reports/reports.component';
@@ -21,9 +22,10 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
         RequestSignatureComponent,
         AlertComponent,
         VerifyIdentityComponent,
+        AlertNComponent
 
     ],
-    imports:[CommonModule, DashboardRoutingModule,SharedModule,NgApexchartsModule,NgbModule],
+    imports:[CommonModule, DashboardRoutingModule,SharedModule,NgApexchartsModule,NgbModule,],
     exports:[]
 
 })

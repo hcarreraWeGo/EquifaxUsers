@@ -39,10 +39,10 @@ export class LoginComponent implements OnInit {
       this.loginService.baseService.id=decode["id"];
       
       // Captura el email de los datos decodificados
-      const email = decode["email"];
+      const username = decode["username"];
     
       // Almacena el email en localStorage
-      const objeto = { nombre: email };
+      const objeto = { nombre: username };
       localStorage.setItem('usuario', JSON.stringify(objeto));
       this.router.navigate(["dashboard/home"]);
     }

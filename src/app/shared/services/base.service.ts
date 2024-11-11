@@ -10,6 +10,7 @@ import { Injectable } from '@angular/core';
 export class BaseService {
   private apiUrl: string = environment.apiUrlBase;
   public id: string = "1";
+  
   constructor(private _http: HttpClient,
     private alertService: AlertServiceN,
     private localStorageService: LocalStorageService,
@@ -22,6 +23,25 @@ export class BaseService {
 
   login(body: any): Observable<any> {
     return this._http.post<any>(`${this.apiUrl}auth/login`, body).pipe(
+      map(data => data.data),
+      catchError(this.handleError.bind(this))
+    );
+  }
+  logout(): void {
+    this.localStorageService.clearAll();
+    location.reload();
+  }
+
+  post(service: string,body:any): Observable<any> {
+    console.log(`${this.apiUrl}${service}`)
+    return this._http.post<any>(`${this.apiUrl}${service}`,body).pipe(
+      map(data => data),
+      catchError(this.handleError.bind(this))
+    );
+  }
+  get(service: string): Observable<any> {
+    console.log(`${this.apiUrl}${service}`)
+    return this._http.get<any>(`${this.apiUrl}${service}`).pipe(
       map(data => data.data),
       catchError(this.handleError.bind(this))
     );

@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
-import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
+import { SliderService } from 'src/app/shared/components/sidebar/slidebar.service';
+
 
 @Component({
   selector: 'app-reports',
@@ -7,13 +8,20 @@ import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
   styleUrl: './reports.component.scss'
 })
 export class ReportsComponent {
+  constructor(
+    private dashboardService: SliderService,
 
-  public iframeUrl: SafeResourceUrl;
+  ) {
+    this.loadDataTable();
+  }
+  private async loadDataTable(): Promise<void> {
+    try {
+      const response = await this.dashboardService.getUserRoute(); 
+      const routeCodes = response.data; 
+      console.log(routeCodes[0]);
+    }
+    catch{}
 
-  constructor(private sanitizer: DomSanitizer) {
-    // Asigna la URL que quieras mostrar en el iframe
-    const url = 'https://enext.online/reporteria/public/index.php';
-    this.iframeUrl = this.sanitizer.bypassSecurityTrustResourceUrl(url);
   }
 
 }

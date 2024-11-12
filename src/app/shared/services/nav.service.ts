@@ -92,7 +92,6 @@ export class NavService implements OnDestroy {
       console.log(routeCodes);
       this.MENUITEMS = [
         { path: "dashboard/home", icon: "home", title: "Home", active: false, type: "link", bookmark: true },
-        { path: "dashboard/reportes", icon: "file", title: "Reportes", active: false, type: "link", bookmark: true },
       ];
   
       // Agregar "Solicitar Firma" si routeCodes incluye 1
@@ -104,7 +103,7 @@ export class NavService implements OnDestroy {
       if (routeCodes.includes(2)) {
         this.MENUITEMS.push({ path: "dashboard/verificar-identidad", icon: "search", title: "Verificar Identidad", active: false, type: "link", bookmark: true });
       }
-  
+      this.MENUITEMS.push({ path: "dashboard/reportes", icon: "file", title: "Reportes", active: false, type: "link", bookmark: true })
       this.items.next(this.MENUITEMS); // Actualiza los elementos de menú
     } catch (error) {
       console.error("Error al cargar los elementos de menú:", error);

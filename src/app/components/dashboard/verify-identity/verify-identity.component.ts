@@ -41,7 +41,10 @@ export class VerifyIdentityComponent implements OnInit{
   async onSubmit() {
     if (this.solicitudForm.valid) {
       const formData = this.solicitudForm.value;
-  
+      // AGREGAMOS A LA BDD
+      var nombres= formData.primerNombre+formData.segundoNombre;
+      var apellidos= formData.primerApellido+formData.segundoApellido;
+      await this.dashService.addCliente(nombres,apellidos,formData.cedula,this.randomTextNumber,formData.email,2);
       // Preparamos el cuerpo para la API
       const requestBody = {
         "url": "https://enext.cloud/firmador/links/generador/api/",
@@ -68,6 +71,7 @@ export class VerifyIdentityComponent implements OnInit{
       };
   
       try {
+       
         // Esperar la respuesta de la API
         const resp = await this.apiService.sendPostApiGenerica(requestBody);
         //console.log('Respuesta de la API:', resp);
@@ -80,9 +84,6 @@ export class VerifyIdentityComponent implements OnInit{
 
           //console.log("Datos a enviar ",data);
           var envio = await this.apiService.envioLinkCorreo(data);
-          var nombres= formData.primerNombre+formData.segundoNombre;
-          var apellidos= formData.primerApellido+formData.segundoApellido;
-          await this.dashService.addCliente(nombres,apellidos,formData.cedula,this.randomTextNumber,formData.email,2);
           this.alertService.showAlert("proceso exitoso", 'success');
           //console.log("Respuesta de envio de correo",envio.return);
           // Resetear el formulario

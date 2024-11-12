@@ -1,3 +1,4 @@
+import { DashboardService } from './../dashboard.service';
 import { AlertService } from './../../../shared/components/alert/alert.service';
 import { ApiService } from './../../../shared/services/request-signature/api.service';
 import { Component, OnInit } from '@angular/core';
@@ -15,7 +16,10 @@ export class RequestSignatureComponent implements OnInit {
   randomTextNumber: string | null = null;
 
 
-  constructor(private fb: FormBuilder, private apiService: ApiService,private alertService: AlertService) {
+  constructor(private fb: FormBuilder, 
+    private apiService: ApiService,
+    private alertService: AlertService,
+    private dashService:DashboardService) {
     this.randomTextNumber = this.generateRandomTextNumber();
    }
 
@@ -83,7 +87,7 @@ export class RequestSignatureComponent implements OnInit {
       try {
         // Esperar la respuesta de la API
         const resp = await this.apiService.sendPostApiGenerica(requestBody);
-        //console.log('Respuesta de la API:', resp);
+        console.log('Respuesta de la API:', resp);
         //console.log("vercodigo",resp.codigo);
         if (resp.codigo === "1"){
           const data={
@@ -91,9 +95,14 @@ export class RequestSignatureComponent implements OnInit {
             "correo":formData.email
           }
 
-          //console.log("Datos a enviar ",data);
+          // Envio de correo
           var envio = await this.apiService.envioLinkCorreo(data);
           this.alertService.showAlert('Correo enviado', 'success');
+          //Actualizamos numero de tramite
+          //await this.verifyService.addNumTramite(formData.cedula,this.randomTextNumber);
+          var nombres= formData.primerNombre+formData.segundoNombre;
+          var apellidos= formData.primerApellido+formData.segundoApellido;
+          await this.dashService.addCliente(nombres,apellidos,formData.cedula,this.randomTextNumber,formData.email,1);
           //console.log("Respuesta de envio de correo",envio.return);
           // Resetear el formulario
           this.solicitudForm.reset(); // Reinicia los campos del formulario

@@ -3,6 +3,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { AlertService } from 'src/app/shared/components/alert/alert.service';
 import { ApiService } from 'src/app/shared/services/request-signature/api.service';
 import { environment } from 'src/environments/environment';
+import { DashboardService } from '../dashboard.service';
 
 @Component({
   selector: 'app-verify-identity',
@@ -15,7 +16,10 @@ export class VerifyIdentityComponent implements OnInit{
   randomTextNumber: string | null = null;
 
 
-  constructor(private fb: FormBuilder, private apiService: ApiService,private alertService: AlertService) {
+  constructor(private fb: FormBuilder, 
+    private apiService: ApiService,
+    private alertService: AlertService,
+    private dashService:DashboardService) {
     this.randomTextNumber = this.generateRandomTextNumber();
    }
 
@@ -76,6 +80,9 @@ export class VerifyIdentityComponent implements OnInit{
 
           //console.log("Datos a enviar ",data);
           var envio = await this.apiService.envioLinkCorreo(data);
+          var nombres= formData.primerNombre+formData.segundoNombre;
+          var apellidos= formData.primerApellido+formData.segundoApellido;
+          await this.dashService.addCliente(nombres,apellidos,formData.cedula,this.randomTextNumber,formData.email,2);
           this.alertService.showAlert("proceso exitoso", 'success');
           //console.log("Respuesta de envio de correo",envio.return);
           // Resetear el formulario

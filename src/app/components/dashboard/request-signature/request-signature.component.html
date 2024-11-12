@@ -14,10 +14,16 @@
                             <div class="col-md-6 mb-3">
                                 <label class="col-form-label">Primer Nombre</label>
                                 <input class="form-control" type="text" formControlName="primerNombre" placeholder="Primer Nombre">
+                                <div *ngIf="solicitudForm.get('primerNombre')?.invalid && solicitudForm.get('primerNombre')?.touched" class="text-danger">
+                                    {{ getLetrasErrorMessage(solicitudForm.get('primerNombre')) }}
+                                </div>
                             </div>
                             <div class="col-md-6 mb-3">
                                 <label class="col-form-label">Segundo Nombre</label>
                                 <input class="form-control" type="text" formControlName="segundoNombre" placeholder="Segundo nombre">
+                                <div *ngIf="solicitudForm.get('segundoNombre')?.invalid && solicitudForm.get('segundoNombre')?.touched" class="text-danger">
+                                    {{ getLetrasErrorMessage(solicitudForm.get('segundoNombre')) }}
+                                </div>
                             </div>
                         </div>
 
@@ -25,10 +31,16 @@
                             <div class="col-md-6 mb-3">
                                 <label class="col-form-label">Primer Apellido</label>
                                 <input class="form-control" type="text" formControlName="primerApellido" placeholder="Primer Apellido">
+                                <div *ngIf="solicitudForm.get('primerApellido')?.invalid && solicitudForm.get('primerApellido')?.touched" class="text-danger">
+                                    {{ getLetrasErrorMessage(solicitudForm.get('primerApellido')) }}
+                                </div>
                             </div>
                             <div class="col-md-6 mb-3">
                                 <label class="col-form-label">Segundo Apellido</label>
                                 <input class="form-control" type="text" formControlName="segundoApellido" placeholder="Segundo Apellido">
+                                <div *ngIf="solicitudForm.get('segundoApellido')?.invalid && solicitudForm.get('segundoApellido')?.touched" class="text-danger">
+                                    {{ getLetrasErrorMessage(solicitudForm.get('segundoApellido')) }}
+                                </div>
                             </div>
                         </div>
 
@@ -36,6 +48,9 @@
                             <div class="col-md-6 mb-3">
                                 <label class="col-form-label">Cédula</label>
                                 <input class="form-control" type="text" formControlName="cedula" placeholder="Cédula">
+                                <div *ngIf="solicitudForm.get('cedula')?.invalid && solicitudForm.get('cedula')?.touched" class="text-danger">
+                                    {{ getCedulaErrorMessage(solicitudForm.get('cedula')) }}
+                                </div>
                             </div>
                         </div>
 
@@ -45,10 +60,16 @@
                             <div class="col-md-6 mb-3">
                                 <label class="col-form-label">Ciudad</label>
                                 <input class="form-control" type="text" formControlName="ciudad" placeholder="Ciudad">
+                                <div *ngIf="solicitudForm.get('ciudad')?.invalid && solicitudForm.get('ciudad')?.touched" class="text-danger">
+                                    {{ getLetrasErrorMessage(solicitudForm.get('ciudad')) }}
+                                </div>
                             </div>
                             <div class="col-md-6 mb-3">
                                 <label class="col-form-label">Provincia</label>
                                 <input class="form-control" type="text" formControlName="provincia" placeholder="Provincia">
+                                <div *ngIf="solicitudForm.get('provincia')?.invalid && solicitudForm.get('provincia')?.touched" class="text-danger">
+                                    {{ getLetrasErrorMessage(solicitudForm.get('provincia')) }}
+                                </div>
                             </div>
                         </div>
 
@@ -56,6 +77,9 @@
                             <div class="col-md-6 mb-3">
                                 <label class="col-form-label">Dirección</label>
                                 <input class="form-control" type="text" formControlName="direccion" placeholder="Dirección">
+                                <div *ngIf="solicitudForm.get('direccion')?.invalid && solicitudForm.get('direccion')?.touched" class="text-danger">
+                                    Este campo es requerido.
+                                </div>
                             </div>
                         </div>
 
@@ -65,10 +89,16 @@
                             <div class="col-md-6 mb-3">
                                 <label class="col-form-label">Email</label>
                                 <input class="form-control" type="text" formControlName="email" placeholder="Email">
+                                <div *ngIf="solicitudForm.get('email')?.invalid && solicitudForm.get('email')?.touched" class="text-danger">
+                                    {{ getCorreoErrorMessage(solicitudForm.get('email')) }}
+                                </div>
                             </div>
                             <div class="col-md-6 mb-3">
                                 <label class="col-form-label">Número de Celular</label>
                                 <input class="form-control" type="text" formControlName="telefono" placeholder="Número de Celular">
+                                <div *ngIf="solicitudForm.get('telefono')?.invalid && solicitudForm.get('telefono')?.touched" class="text-danger">
+                                    {{ getTelefonoErrorMessage(solicitudForm.get('telefono')) }}
+                                </div>
                             </div>
                         </div>
 

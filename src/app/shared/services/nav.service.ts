@@ -46,12 +46,12 @@ export class NavService implements OnDestroy {
   // Full screen
   public fullScreen: boolean = false;
 
-   // Menú inicial vacío, que se actualizará con los elementos permitidos
-   MENUITEMS: Menu[] = [];
-    // Array
-    items = new BehaviorSubject<Menu[]>(this.MENUITEMS);
+  // Menú inicial vacío, que se actualizará con los elementos permitidos
+  MENUITEMS: Menu[] = [];
+  // Array
+  items = new BehaviorSubject<Menu[]>(this.MENUITEMS);
 
-  constructor(private router: Router, 
+  constructor(private router: Router,
     private dashboardService: SliderService,
 
   ) {
@@ -77,40 +77,60 @@ export class NavService implements OnDestroy {
         this.levelMenu = false;
       });
     }
-  this.loadMenuItems();
+    this.loadMenuItems();
   }
 
   private setScreenWidth(width: number): void {
     this.screenWidth.next(width);
   }
-  
+
   private async loadMenuItems(): Promise<void> {
     try {
+      const response = await this.dashboardService.getUserRoute();
+      const routeCodes = response.data;
       
-      const response = await this.dashboardService.getUserRoute(); // Usa el ID del usuario si es necesario
-      const routeCodes = response.data; // Aquí obtenemos el array [1, 2] de la respuesta del backend
-      // console.log(routeCodes);
+      // Inicializar el menú con la opción principal de Home
       this.MENUITEMS = [
         { path: "dashboard/home", icon: "home", title: "Home", active: false, type: "link", bookmark: true },
       ];
   
+      // Variables para almacenar reportes dinámicos
+      const reportChildren = [];
+  
       // Agregar "Solicitar Firma" si routeCodes incluye 1
       if (routeCodes.includes(1)) {
         this.MENUITEMS.push({ path: "dashboard/solicitar-firma", icon: "user", title: "Solicitar Firma", active: false, type: "link", bookmark: true });
+        // Añadir a reportes
+        reportChildren.push({ title: "Solicitar Firma", path: "dashboard/reporte-solicitar", type: "link" });
       }
   
       // Agregar "Verificar Identidad" si routeCodes incluye 2
       if (routeCodes.includes(2)) {
         this.MENUITEMS.push({ path: "dashboard/verificar-identidad", icon: "search", title: "Verificar Identidad", active: false, type: "link", bookmark: true });
+        // Añadir a reportes
+        reportChildren.push({ title: "Verificar Identidad", path: "dashboard/reportes/verificar-identidad", type: "link" });
       }
-      this.MENUITEMS.push({ path: "dashboard/reportes", icon: "file", title: "Reportes", active: false, type: "link", bookmark: true })
+  
+      // Agregar sección de Reportes si hay elementos en reportChildren
+      if (reportChildren.length > 0) {
+        this.MENUITEMS.push({
+          title: "Reportes",
+          icon: "file",
+          type: "sub",
+          badgeType: "light-primary",
+          active: true,
+          children: reportChildren
+        });
+      }
+      
       this.items.next(this.MENUITEMS); // Actualiza los elementos de menú
     } catch (error) {
       // console.error("Error al cargar los elementos de menú:", error);
     }
   }
   
-  
+
+
 
   ngOnDestroy() {
     // this.unsubscriber.next();

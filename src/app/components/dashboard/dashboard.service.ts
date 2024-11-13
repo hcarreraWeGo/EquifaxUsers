@@ -49,9 +49,10 @@ export class DashboardService {
     }
   }
 
-  async getClienteByUsuario(): Promise<any> {
+  async getClienteByUsuario(idProceso): Promise<any> {
     return await this.baseService
-      .get(`clientes/${this.baseService.id}`)
+    // es opcional el idProceso para este endpoint
+      .get(`clientes/${this.baseService.id}?idProceso=${idProceso}`)
       .toPromise();
   }
 }

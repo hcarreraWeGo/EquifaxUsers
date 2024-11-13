@@ -20,6 +20,7 @@ export class ReportsComponent {
   // abrir detalle
   showDetalle: boolean = false; 
   selectedTramite: any;
+  selectedProceso: any;
   constructor(
     private sliderbarService: SliderService,
     private dashService: DashboardService,
@@ -33,7 +34,7 @@ export class ReportsComponent {
     this.loadDataTable();
   }
   private async loadDataTable(): Promise<void> {
-    this.clientes = await this.dashService.getClienteByUsuario();
+    this.clientes = await this.dashService.getClienteByUsuario(1);
     this.tableItem$ = of(this.clientes);
     this.service.setUserData(this.clientes); // Actualiza el servicio con los nuevos datos
     this.tableItem$ = this.service.tableItem$;
@@ -60,9 +61,10 @@ export class ReportsComponent {
     this.loadDataTable(); // Recargar datos si es necesario para actualizar la vista
   }
   
-  async openDetail(documentId) {
+  async openDetail(documentId,proceso) {
     // console.log(documentId);
     this.selectedTramite = documentId;
+    this.selectedProceso=proceso;
     this.showDetalle = true;
   }
   closeViewer() {

@@ -7,4 +7,6 @@ export const environment = {
   authUsername: 'FIRMADORV3',
   authPassword: 'super987',
   secretLocalStorage:'%_enext_%_Flow%',
+  solicitar: 'https://enext.cloud/pre_equifax/admin/Consulta/consultaBase64.php',
+  verificar:'https://enext.cloud/firmador/admin/Consulta/consultaBase64.php'
 };

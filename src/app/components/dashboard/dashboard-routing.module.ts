@@ -24,7 +24,7 @@ const routes: Routes = [
         component: VerifyIdentityComponent,
       },
       {
-        path: "reportes",
+        path: "reporte-solicitar",
         component: ReportsComponent,
       },
       

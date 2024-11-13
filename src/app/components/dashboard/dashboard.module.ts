@@ -1,3 +1,4 @@
+import { DetailComponent } from './reports/Elements/detail/detail.component';
 
 import { VerifyIdentityComponent } from './verify-identity/verify-identity.component';
 import { RequestSignatureComponent } from './request-signature/request-signature.component';
@@ -22,6 +23,7 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
         RequestSignatureComponent,
         AlertComponent,
         VerifyIdentityComponent,
+        DetailComponent
         
 
     ],

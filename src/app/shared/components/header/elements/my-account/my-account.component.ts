@@ -17,7 +17,7 @@ export class MyAccountComponent implements OnInit {
   ngOnInit():void {
      // Recupera el valor de 'usuario' desde localStorage
      const usuario = localStorage.getItem('usuario');
-     console.log(usuario);
+    //  console.log(usuario);
      // Si el valor existe, parsea el JSON y accede al email
      if (usuario) {
        const userData = JSON.parse(usuario);

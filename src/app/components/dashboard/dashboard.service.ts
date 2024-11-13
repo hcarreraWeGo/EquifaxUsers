@@ -48,4 +48,10 @@ export class DashboardService {
       throw error;
     }
   }
+
+  async getClienteByUsuario(): Promise<any> {
+    return await this.baseService
+      .get(`clientes/${this.baseService.id}`)
+      .toPromise();
+  }
 }

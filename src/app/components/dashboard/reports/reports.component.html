@@ -1,7 +1,88 @@
 <app-breadcrumb [title]="'Reporte'"></app-breadcrumb>
 
-
-
-
-
+<div *ngIf="!showDetalle">
+<div class="container-fluid">
+  <!-- TABLA -->
+  <div class="col-sm-12">
+    <div class="card">
+      <div class="card-header">
+        <h3>Mis archivos</h3>
+        <span>Aquí encontrarás la lista de tus documentos pendientes de firma</span>
+      </div>
   
+      <div class="table-responsive signal-table">
+        <table class="table table-hover">
+          <thead class="text-center">              
+            <tr>
+              <th scope="col">#</th>
+              <th scope="col" sortable="cedula" (sort)="onSort($event)">Cédula</th>
+              <th scope="col" sortable="nombre" (sort)="onSort($event)">Nombres</th>
+              <th scope="col" sortable="apellido" (sort)="onSort($event)">Apellidos</th>
+              <th scope="col" sortable="correo" (sort)="onSort($event)">correo</th>
+              <th scope="col" sortable="fecha" (sort)="onSort($event)">Fecha de consulta</th>
+              <th scope="col">Acciones</th>
+            </tr>
+          </thead>
+          <tbody class="text-center">
+            <tr *ngIf="!(tableItem$ | async)?.length">
+              <td colspan="6" >No hay clientes disponibles</td>
+            </tr>  
+            <tr *ngFor="let cliente of (tableItem$ | async) || []; let i = index">
+              <th scope="row">{{ i + 1 }}</th>
+              <td class="text-center">
+                <ngb-highlight [result]="cliente.cedula" [term]="service.searchTerm"></ngb-highlight>
+              </td>
+              <td class="text-center">
+                <ngb-highlight [result]="cliente.nombre" [term]="service.searchTerm"></ngb-highlight>
+              </td>
+              <td class="text-center">
+                <ngb-highlight [result]="cliente.apellido" [term]="service.searchTerm"></ngb-highlight>
+              </td>
+              <td class="text-center">
+                <ngb-highlight [result]="cliente.correo" [term]="service.searchTerm"></ngb-highlight>
+              </td>
+              <td class="text-center">
+                <ngb-highlight [result]="cliente.createdAt | date: 'yyyy/MMM/dd'" [term]="service.searchTerm"></ngb-highlight>
+              </td>
+              <td class="d-flex align-items-center action-buttons" class="text-center">
+                <button class="btn btn-outline-primary btn-sm me-2" type="button" (click)="openDetail(cliente.numTramite)">
+                  Detalle
+                </button>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+  
+        <div class="d-flex justify-content-between mt-3">
+          <!-- Selector de cantidad de elementos por página -->
+          <select class="form-select" style="width: auto" [(ngModel)]="service.pageSize" (change)="onPageSizeChange(service.pageSize)" >
+            <option [ngValue]="2">2 items por página</option>
+            <option [ngValue]="4">4 items por página</option>
+            <option [ngValue]="6">6 items por página</option>
+          </select>
+  
+          <!-- Paginación -->
+          <ngb-pagination
+            class="ms-3"
+            [collectionSize]="(total$ | async)!" 
+            [(page)]="service.page" 
+            [pageSize]="service.pageSize" 
+            [maxSize]="5"
+            [rotate]="true" 
+            [boundaryLinks]="true">
+          </ngb-pagination>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+</div>
+<div *ngIf="showDetalle">
+ 
+      <app-detail [numTramite]="selectedTramite"></app-detail>
+      <!-- Contenedor para centrar el botón -->
+  <div class="d-flex justify-content-center">
+    <button class="btn btn-primary mt-2 auto-width" (click)="closeViewer()">Cerrar Detalle</button>
+  </div>
+  <br>
+</div>

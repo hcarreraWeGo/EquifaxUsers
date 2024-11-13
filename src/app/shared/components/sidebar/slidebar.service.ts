@@ -8,15 +8,15 @@ export class SliderService{
 
     async getUserRoute(): Promise<any> {
         try {
-            console.log("userId",this.baseService.id);
+            // console.log("userId",this.baseService.id);
             const data={
                 "idUsuario":this.baseService.id
             }
           const response = await this.baseService.post(`usuario/proceso`,data).toPromise();
-          console.log("Respuesta del servidor:", response);
+          // console.log("Respuesta del servidor:", response);
           return response;
         } catch (error) {
-          console.error("Error al enviar el firmante:", error);
+          // console.error("Error al enviar el firmante:", error);
           throw error;
         }
       }

@@ -33,14 +33,14 @@ export class BaseService {
   }
 
   post(service: string,body:any): Observable<any> {
-    console.log(`${this.apiUrl}${service}`)
+    // console.log(`${this.apiUrl}${service}`)
     return this._http.post<any>(`${this.apiUrl}${service}`,body).pipe(
       map(data => data),
       catchError(this.handleError.bind(this))
     );
   }
   get(service: string): Observable<any> {
-    console.log(`${this.apiUrl}${service}`)
+    // console.log(`${this.apiUrl}${service}`)
     return this._http.get<any>(`${this.apiUrl}${service}`).pipe(
       map(data => data.data),
       catchError(this.handleError.bind(this))
@@ -52,7 +52,7 @@ export class BaseService {
 
   public handleError(error: HttpErrorResponse): Observable<never> {
     this.alertService.showAlert(error.error.message, "danger");
-    console.log(error.error.message, "danger");
+    // console.log(error.error.message, "danger");
     return throwError(() => new Error(error.message));
   }
 }

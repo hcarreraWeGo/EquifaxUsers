@@ -1,0 +1,58 @@
+<div class="container-fluid">
+  <!-- TABLA -->
+  <div class="col-sm-12">
+    <div class="card">
+      <div class="card-header">
+        <h3>Mis archivos</h3>
+        <span>Aquí encontrarás la lista de tus documentos pendientes de firma</span>
+      </div>
+
+      <div class="table-responsive signal-table">
+        <table class="table table-hover">
+          <thead class="text-center">
+            <tr>
+              <th scope="col">#</th>
+              <th scope="col" sortable="estadoFirma" (sort)="onSort($event)">Estado de Firma</th>
+              <th scope="col" sortable="estadoConsetimiento" (sort)="onSort($event)">Estado Consentimiento</th>
+              <th scope="col" sortable="estadoCodigoDactilar" (sort)="onSort($event)">Estado Codigo Dactilar</th>
+              <th scope="col" sortable="estadoBiometria" (sort)="onSort($event)">Estado Biometria</th>
+              <th scope="col" sortable="fechaFirma" (sort)="onSort($event)">Fecha de firma</th>
+              <!-- <th scope="col">Acciones</th> -->
+            </tr>
+          </thead>
+          <tbody class="text-center">
+            <tr *ngIf="!(tableItem$ | async)?.length">
+              <td colspan="6">No hay clientes disponibles</td>
+            </tr>
+            <tr *ngFor="let cliente of (tableItem$ | async) || []; let i = index">
+              <th scope="row">{{ i + 1 }}</th>
+              <td class="text-center">
+                <ngb-highlight [result]="cliente.estadoFirma" [term]="service.searchTerm"></ngb-highlight>
+              </td>
+              <td class="text-center">
+                <ngb-highlight [result]="cliente.estadoConsentimiento" [term]="service.searchTerm"></ngb-highlight>
+              </td>
+              <td class="text-center">
+                <ngb-highlight [result]="cliente.estadoCodDdactilar" [term]="service.searchTerm"></ngb-highlight>
+              </td>
+              <td class="text-center">
+                <ngb-highlight [result]="cliente.estadoBiometria" [term]="service.searchTerm"></ngb-highlight>
+              </td>
+              <td class="text-center">
+                <ngb-highlight [result]="cliente.fechaFirma | date: 'yyyy/MMM/dd'"
+                  [term]="service.searchTerm"></ngb-highlight>
+              </td>
+              <!-- <td class="d-flex align-items-center action-buttons" class="text-center">
+                  <button class="btn btn-outline-primary btn-sm me-2" type="button" (click)="openDetail(cliente.numTramite)">
+                    Detalle
+                  </button>
+                </td> -->
+            </tr>
+          </tbody>
+        </table>
+
+       
+      </div>
+    </div>
+  </div>
+</div>

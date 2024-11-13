@@ -3,6 +3,7 @@ import { AbstractControl, FormBuilder, FormGroup, Validators } from '@angular/fo
 import { AlertService } from 'src/app/shared/components/alert/alert.service';
 import { ApiService } from 'src/app/shared/services/request-signature/api.service';
 import { DashboardService } from '../dashboard.service';
+import { AlertServiceN } from 'src/app/shared/components/alert-n/alert.service';
 
 @Component({
   selector: 'app-verify-identity',
@@ -17,7 +18,7 @@ export class VerifyIdentityComponent implements OnInit {
 
   constructor(private fb: FormBuilder,
     private apiService: ApiService,
-    private alertService: AlertService,
+    private alertService: AlertServiceN,
     private dashService: DashboardService) {
     this.randomTextNumber = this.generateRandomTextNumber();
   }
@@ -120,7 +121,7 @@ export class VerifyIdentityComponent implements OnInit {
           this.solicitudForm.reset(); // Reinicia los campos del formulario
         }
         else {
-          this.alertService.showAlert(envio.return, 'error');
+          this.alertService.showAlert(envio.return, 'danger');
         }
       } catch (error) {
         console.error('Error al llamar a la API:', error);

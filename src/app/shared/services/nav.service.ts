@@ -89,7 +89,7 @@ export class NavService implements OnDestroy {
       
       const response = await this.dashboardService.getUserRoute(); // Usa el ID del usuario si es necesario
       const routeCodes = response.data; // Aquí obtenemos el array [1, 2] de la respuesta del backend
-      console.log(routeCodes);
+      // console.log(routeCodes);
       this.MENUITEMS = [
         { path: "dashboard/home", icon: "home", title: "Home", active: false, type: "link", bookmark: true },
       ];
@@ -106,7 +106,7 @@ export class NavService implements OnDestroy {
       this.MENUITEMS.push({ path: "dashboard/reportes", icon: "file", title: "Reportes", active: false, type: "link", bookmark: true })
       this.items.next(this.MENUITEMS); // Actualiza los elementos de menú
     } catch (error) {
-      console.error("Error al cargar los elementos de menú:", error);
+      // console.error("Error al cargar los elementos de menú:", error);
     }
   }
   

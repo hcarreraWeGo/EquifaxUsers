@@ -89,7 +89,7 @@ export class VerifyIdentityComponent implements OnInit {
           "certificado": {
             "perfil": "001",
             "cedula": formData.cedula,
-            "nombres": `${formData.primerNombre} ${formData.segundoNombre}`,
+            "nombres": `${formData.primerNombre}  ${formData.segundoNombre}`,
             "apellido1": formData.primerApellido,
             "apellido2": formData.segundoApellido,
             "direccion": "quitumbe",

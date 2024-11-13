@@ -108,7 +108,7 @@ export class NavService implements OnDestroy {
       if (routeCodes.includes(2)) {
         this.MENUITEMS.push({ path: "dashboard/verificar-identidad", icon: "search", title: "Verificar Identidad", active: false, type: "link", bookmark: true });
         // Añadir a reportes
-        reportChildren.push({ title: "Verificar Identidad", path: "dashboard/reportes/verificar-identidad", type: "link" });
+        reportChildren.push({ title: "Verificar Identidad", path: "dashboard/reporte-verificar", type: "link" });
       }
   
       // Agregar sección de Reportes si hay elementos en reportChildren

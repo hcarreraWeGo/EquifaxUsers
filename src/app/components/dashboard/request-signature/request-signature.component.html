@@ -57,21 +57,29 @@
                         <hr class="mt-4 mb-4">
                         <h6>Ubicación</h6>
                         <div class="row">
-                            <div class="col-md-6 mb-3">
-                                <label class="col-form-label">Ciudad</label>
-                                <input class="form-control" type="text" formControlName="ciudad" placeholder="Ciudad">
-                                <div *ngIf="solicitudForm.get('ciudad')?.invalid && solicitudForm.get('ciudad')?.touched" class="text-danger">
-                                    {{ getLetrasErrorMessage(solicitudForm.get('ciudad')) }}
-                                </div>
+                          <div class="col-md-6 mb-3">
+                            <label class="col-form-label">Provincia</label>
+                            <select class="form-control" formControlName="provincia" (change)="onProvinciaChange()">
+                              <option value="">Seleccione una provincia</option>
+                              <option *ngFor="let provincia of provincias" [value]="provincia">{{ provincia }}</option>
+                            </select>
+                            <div *ngIf="solicitudForm.get('provincia')?.invalid && solicitudForm.get('provincia')?.touched" class="text-danger">
+                              {{ getLetrasErrorMessage(solicitudForm.get('provincia')) }}
                             </div>
-                            <div class="col-md-6 mb-3">
-                                <label class="col-form-label">Provincia</label>
-                                <input class="form-control" type="text" formControlName="provincia" placeholder="Provincia">
-                                <div *ngIf="solicitudForm.get('provincia')?.invalid && solicitudForm.get('provincia')?.touched" class="text-danger">
-                                    {{ getLetrasErrorMessage(solicitudForm.get('provincia')) }}
-                                </div>
+                          </div>
+                        
+                          <div class="col-md-6 mb-3">
+                            <label class="col-form-label">Ciudad</label>
+                            <select class="form-control" formControlName="ciudad">
+                              <option value="">Seleccione una ciudad</option>
+                              <option *ngFor="let ciudad of ciudades" [value]="ciudad">{{ ciudad }}</option>
+                            </select>
+                            <div *ngIf="solicitudForm.get('ciudad')?.invalid && solicitudForm.get('ciudad')?.touched" class="text-danger">
+                              {{ getLetrasErrorMessage(solicitudForm.get('ciudad')) }}
                             </div>
+                          </div>
                         </div>
+                        
 
                         <div class="row">
                             <div class="col-md-6 mb-3">

@@ -1,3 +1,4 @@
+import { ReportsVerificarComponent } from './reports-verificar/reports-verificar.component';
 import { DetailComponent } from './reports/Elements/detail/detail.component';
 
 import { VerifyIdentityComponent } from './verify-identity/verify-identity.component';
@@ -20,6 +21,7 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
         WelcomeComponent,
         SignatureStatusChartBoxComponent,
         ReportsComponent,
+        ReportsVerificarComponent,
         RequestSignatureComponent,
         AlertComponent,
         VerifyIdentityComponent,

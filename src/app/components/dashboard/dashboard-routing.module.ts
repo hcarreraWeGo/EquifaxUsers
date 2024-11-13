@@ -4,6 +4,7 @@ import { HomeComponent } from "./home/home.component";
 import { ReportsComponent } from "./reports/reports.component";
 import { RequestSignatureComponent } from "./request-signature/request-signature.component";
 import { VerifyIdentityComponent } from "./verify-identity/verify-identity.component";
+import { ReportsVerificarComponent } from "./reports-verificar/reports-verificar.component";
 
 
 
@@ -27,7 +28,10 @@ const routes: Routes = [
         path: "reporte-solicitar",
         component: ReportsComponent,
       },
-      
+      {
+        path:"reporte-verificar",
+        component:ReportsVerificarComponent,
+      }
     ],
   },
 ];

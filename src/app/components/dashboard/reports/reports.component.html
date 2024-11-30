@@ -2,6 +2,16 @@
 
 <div *ngIf="!showDetalle">
 <div class="container-fluid">
+
+  <div class="d-flex justify-content-end mb-3">
+    <input 
+      type="text" 
+      class="form-control w-25" 
+      placeholder="Buscar..." 
+      [(ngModel)]="searchTerm" 
+      (input)="onSearch()" />
+  </div>
+  
   <!-- TABLA -->
   <div class="col-sm-12">
     <div class="card">

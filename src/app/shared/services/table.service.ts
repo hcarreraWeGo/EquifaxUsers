@@ -38,10 +38,10 @@ function matches(table: any, term: string, pipe: PipeTransform) {
         return true;  // Devuelve todos los resultados si el término de búsqueda está vacío
     }
 
-    const fileNameMatches = typeof table.fileName === 'string' && table.fileName.toLowerCase().includes(term.toLowerCase());
-    const invoiceMatches = typeof table.invoice === 'string' && table.invoice.includes(term);
+    const cedulaMatches = typeof table.cedula === 'string' && table.cedula.toLowerCase().includes(term.toLowerCase());
+    const correoMatches = typeof table.correo === 'string' && table.correo.toLowerCase().includes(term.toLowerCase());
 
-    return fileNameMatches || invoiceMatches;
+    return cedulaMatches || correoMatches ;
 }
 
 

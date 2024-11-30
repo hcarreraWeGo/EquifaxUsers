@@ -2,12 +2,22 @@
 
 <div *ngIf="!showDetalle">
 <div class="container-fluid">
+
+  <div class="d-flex justify-content-end mb-3">
+    <input 
+      type="text" 
+      class="form-control w-25" 
+      placeholder="Buscar..." 
+      [(ngModel)]="searchTerm" 
+      (input)="onSearch()" />
+  </div>
+  
   <!-- TABLA -->
   <div class="col-sm-12">
     <div class="card">
       <div class="card-header">
-        <h3>Mis archivos</h3>
-        <span>Aquí encontrarás la lista de tus documentos pendientes de firma</span>
+        <h3>Verificaciones de Identidad</h3>
+        <!-- <span>Aquí encontrarás la lista de tus documentos pendientes de firma</span> -->
       </div>
   
       <div class="table-responsive signal-table">

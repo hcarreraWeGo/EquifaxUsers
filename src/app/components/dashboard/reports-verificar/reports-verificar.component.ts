@@ -12,6 +12,7 @@ import { Observable, of } from 'rxjs';
 export class ReportsVerificarComponent {
 
   clientes: any = [];
+  searchTerm: string = ''; // Nueva variable de búsqueda
   // variables de tabla
   public tableItem$: Observable<any[]> = of([]);
   total$: Observable<number> = of(0);
@@ -71,5 +72,7 @@ export class ReportsVerificarComponent {
       window.location.reload(); // Recarga la página
     });
   }
-
+  onSearch(): void {
+    this.service.searchTerm = this.searchTerm; // Actualiza el término de búsqueda en el servicio
+  }
 }

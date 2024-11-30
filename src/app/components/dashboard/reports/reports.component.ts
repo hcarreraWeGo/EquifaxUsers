@@ -12,6 +12,7 @@ import { DashboardService } from '../dashboard.service';
   styleUrl: './reports.component.scss'
 })
 export class ReportsComponent {
+  searchTerm: string = ''; // Nueva variable de búsqueda
   clientes: any = [];
   // variables de tabla
   public tableItem$: Observable<any[]> = of([]);
@@ -72,5 +73,9 @@ export class ReportsComponent {
     setTimeout(() => {
       window.location.reload(); // Recarga la página
     });
+  }
+
+  onSearch(): void {
+    this.service.searchTerm = this.searchTerm; // Actualiza el término de búsqueda en el servicio
   }
 }

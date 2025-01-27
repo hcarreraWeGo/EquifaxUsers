@@ -1,5 +1,5 @@
 import { AlertComponent } from './shared/components/alert/alert.component';
-import { HttpClient, HttpClientModule } from '@angular/common/http';
+import { HTTP_INTERCEPTORS, HttpClient, HttpClientModule } from '@angular/common/http';
 import { NgModule } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { BrowserModule } from '@angular/platform-browser';
@@ -23,6 +23,7 @@ import { LoginComponent } from './auth/login/login.component';
 import { OverlayModule } from '@angular/cdk/overlay';
 import { StorageService } from './shared/services/storage';
 import { LocalStorageService } from './shared/services/local.storage.service';
+import { NoCacheInterceptor } from './no-cache.interceptor';
 
 export function HttpLoaderFactory(http: HttpClient) {
   return new TranslateHttpLoader(http, "./assets/i18n/", ".json");
@@ -60,7 +61,13 @@ export function HttpLoaderFactory(http: HttpClient) {
     // for Core use:
     LoadingBarModule
   ],
-  providers: [CookieService,StorageService,LocalStorageService],
+  providers: [CookieService,StorageService,LocalStorageService,
+    {
+      provide: HTTP_INTERCEPTORS, 
+      useClass: NoCacheInterceptor, 
+      multi: true
+    }
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

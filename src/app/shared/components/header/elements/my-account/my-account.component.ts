@@ -1,5 +1,6 @@
 import { Component, OnInit } from "@angular/core";
 import { Router } from "@angular/router";
+import { BaseService } from "../../../../services/base.service";
 
 @Component({
   selector: "app-my-account",
@@ -10,7 +11,9 @@ export class MyAccountComponent implements OnInit {
   public userName: string;
   public profileImg: "assets/images/dashboard/profile.jpg";
 
-  constructor(public router: Router) {
+  constructor(public router: Router,
+    private authService: BaseService
+  ) {
 
   }
 
@@ -26,8 +29,7 @@ export class MyAccountComponent implements OnInit {
      }
   }
 
-  logoutFunc() {
-
-    this.router.navigateByUrl('auth/login');
+  logoutFunc(): void {
+    this.authService.logout(); // Asegúrate de inyectar el servicio en el componente
   }
 }

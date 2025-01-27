@@ -5,6 +5,7 @@ import { ReportsComponent } from "./reports/reports.component";
 import { RequestSignatureComponent } from "./request-signature/request-signature.component";
 import { VerifyIdentityComponent } from "./verify-identity/verify-identity.component";
 import { ReportsVerificarComponent } from "./reports-verificar/reports-verificar.component";
+import { authGuard } from "../../guards/auth.guard";
 
 
 
@@ -15,22 +16,27 @@ const routes: Routes = [
       {
         path: "home",
         component: HomeComponent,
+        canActivate: [authGuard],  // Protege la ruta con el guard
       },
       {
         path: "solicitar-firma",
         component: RequestSignatureComponent,
+        canActivate: [authGuard],  // Protege la ruta con el guard
       },
       {
         path: "verificar-identidad",
         component: VerifyIdentityComponent,
+        canActivate: [authGuard],  // Protege la ruta con el guard
       },
       {
         path: "reporte-solicitar",
         component: ReportsComponent,
+        canActivate: [authGuard],  // Protege la ruta con el guard
       },
       {
         path:"reporte-verificar",
         component:ReportsVerificarComponent,
+        canActivate: [authGuard],  // Protege la ruta con el guard
       }
     ],
   },

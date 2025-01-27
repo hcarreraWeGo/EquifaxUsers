@@ -44,7 +44,7 @@ export class LoginComponent implements OnInit {
       // Almacena el email en localStorage
       const objeto = { nombre: username };
       localStorage.setItem('usuario', JSON.stringify(objeto));
-      this.router.navigate(["dashboard/home"]);
+      //this.router.navigate(["dashboard/home"]);
     }
   }
 

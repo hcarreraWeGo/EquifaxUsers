@@ -37,7 +37,7 @@ export class BaseService {
         // Almacena el token
         if (data && data.data && data.data.token) {
           localStorage.setItem('token', data.data.token); // O usa sessionStorage
-          console.log(data.data.token);
+          //console.log(data.data.token);
         }
         return data.data;
       }),

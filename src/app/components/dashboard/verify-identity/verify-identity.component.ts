@@ -1,9 +1,8 @@
+import { ApiService } from './../../../shared/services/request-signature/api.service';
 import { Component, OnInit } from '@angular/core';
 import { AbstractControl, FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { AlertService } from 'src/app/shared/components/alert/alert.service';
-import { ApiService } from 'src/app/shared/services/request-signature/api.service';
 import { DashboardService } from '../dashboard.service';
-import { AlertServiceN } from 'src/app/shared/components/alert-n/alert.service';
+import { AlertServiceN } from '../../../shared/components/alert-n/alert.service';
 
 @Component({
   selector: 'app-verify-identity',

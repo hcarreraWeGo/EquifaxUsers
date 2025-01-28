@@ -72,6 +72,13 @@ export class BaseService {
       catchError(this.handleError.bind(this))
     );
   }
+  get1(service: string): Observable<any> {
+    // console.log(`${this.apiUrl}${service}`)
+    return this._http.get<any>(`${this.apiUrl}${service}`).pipe(
+      map(data => data),
+      catchError(this.handleError.bind(this))
+    );
+  }
   setItem(key: string, value: string): void {
     this.localStorageService.setItem(key, value);
   }

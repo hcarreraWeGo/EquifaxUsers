@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { NgbCalendar } from '@ng-bootstrap/ng-bootstrap';
 import * as data from "../../../shared/data/router-animation/default"
+import { HomeService } from './home.service';
 @Component({
   selector: 'app-home',
   templateUrl: './home.component.html',
@@ -8,11 +9,37 @@ import * as data from "../../../shared/data/router-animation/default"
 })
 export class HomeComponent implements OnInit{
   
-  constructor(calendar: NgbCalendar) {}
-  public purchaseRate = data.purchaseRate
-  public documentoFirmado = data.documentoFirmado;
-  public clientesActivos = data.clienteactivo;
-  public identidadValida = data.identidadValidad;
-  public documentoNA = data.documentosNa;
-  async ngOnInit(): Promise<void> {}
+  constructor(calendar: NgbCalendar,
+    private homeservice: HomeService
+  ) {}
+  public totalFirmas = {};
+  public totalIdentidad = {};
+  public restanteFirmas = {};
+  public restantesIdentidad = {};
+  async ngOnInit(): Promise<void> {
+    const totalFirmasResponse = await this.homeservice.getTotalFirma();
+    this.totalFirmas = this.transformToTargetStructure(totalFirmasResponse.totalFirmas, 'Total documentos');
+
+    const restanteFirmasResponse = await this.homeservice.getRestanteFirma();
+    this.restanteFirmas = this.transformToTargetStructure(restanteFirmasResponse.firmasRestantes, 'Firmas restantes');
+
+    const totalIdentidadResponse = await this.homeservice.getTotalIdentidad();
+    this.totalIdentidad = this.transformToTargetStructure(totalIdentidadResponse.totalFirmas, 'Total identidad');
+
+    const restantesIdentidadResponse = await this.homeservice.getRestanteIdentidad();
+    this.restantesIdentidad = this.transformToTargetStructure(restantesIdentidadResponse.firmasRestantes, 'Identidad restante');
+  }
+
+  // Método para transformar la respuesta en la estructura requerida
+  private transformToTargetStructure(counter: number, name: string): any {
+    return {
+      data: {
+        icon: 'rate', // Este valor puede ser dinámico si lo necesitas
+        counter: counter,
+        name: name,
+        font: 'primary',
+        today: '0', // Puedes ajustar esto según tus necesidades
+      },
+    };
+  }
 }

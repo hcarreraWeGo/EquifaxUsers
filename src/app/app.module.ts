@@ -1,4 +1,3 @@
-import { AlertComponent } from './shared/components/alert/alert.component';
 import { HTTP_INTERCEPTORS, HttpClient, HttpClientModule } from '@angular/common/http';
 import { NgModule } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
@@ -18,7 +17,7 @@ import { LoadingBarModule } from '@ngx-loading-bar/core';
 import { CookieService } from 'ngx-cookie-service';
 
 import { AppComponent } from './app.component';
-import { LoginComponent } from './auth/login/login.component';
+
 
 import { OverlayModule } from '@angular/cdk/overlay';
 import { StorageService } from './shared/services/storage';
@@ -32,7 +31,6 @@ export function HttpLoaderFactory(http: HttpClient) {
 @NgModule({
   declarations: [
     AppComponent,
-    LoginComponent,
    
     
   ],

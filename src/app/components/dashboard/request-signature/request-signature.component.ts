@@ -66,12 +66,12 @@ export class RequestSignatureComponent implements OnInit {
       ], // Solo números, exactamente 10 dígitos
       ciudad: ['', [
         Validators.required,
-       
+
       ]
       ], // Solo letras
       provincia: ['', [
         Validators.required,
-        
+
       ]
       ], // Solo letras
       direccion: ['', Validators.required],
@@ -144,7 +144,8 @@ export class RequestSignatureComponent implements OnInit {
       try {
         // Esperar la respuesta de la API
         const resp = await this.apiService.sendPostApiGenerica(requestBody);
-        console.log('Respuesta de la API:', resp);
+        const jsonResponse = JSON.parse(resp); // Convertir string a JSON
+        console.log('Código:', jsonResponse.codigo);
         //console.log("vercodigo",resp.codigo);
         if (resp.codigo === "1") {
           const data = {
@@ -220,4 +221,6 @@ export class RequestSignatureComponent implements OnInit {
     }
     return '';
   }
+
+
 }

@@ -1,10 +1,10 @@
+import { TableService } from './../../../../../shared/services/table.service';
+import { ApiService } from './../../../../../shared/services/request-signature/api.service';
+import { NgbdSortableHeader,SortEvent } from './../../../../../shared/directives/NgbdSortableHeader';
+import { AlertServiceN } from './../../../../../shared/components/alert-n/alert.service';
 import { Component, Input, QueryList, ViewChildren } from '@angular/core';
 import { Observable, of } from 'rxjs';
-import { AlertServiceN } from 'src/app/shared/components/alert-n/alert.service';
-import { NgbdSortableHeader, SortEvent } from 'src/app/shared/directives/NgbdSortableHeader';
-import { ApiService } from 'src/app/shared/services/request-signature/api.service';
-import { TableService } from 'src/app/shared/services/table.service';
-import { environment } from 'src/environments/environment';
+import { environment } from '../../../../../../environments/environment';
 
 
 @Component({

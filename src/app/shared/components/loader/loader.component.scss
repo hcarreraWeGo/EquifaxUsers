@@ -1,3 +1,33 @@
+.loader-wrapper {
+  position: fixed; /* Mantiene el loader al frente de todo */
+  top: 0;
+  left: 0;
+  width: 100vw; /* Ocupa todo el ancho de la pantalla */
+  height: 100vh; /* Ocupa todo el alto de la pantalla */
+  background-color: rgba(255, 255, 255, 0.9); /* Fondo blanco con transparencia ligera */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 9999; /* Asegura que esté por encima de todo */
+}
+
+/* Ocultar loader cuando se agrega la clase loderhide */
 .loader-wrapper.loderhide {
   display: none;
+}
+
+/* Estilos para el loader */
+.loader-index {
+  width: 80px;
+  height: 80px;
+  border-radius: 50%;
+  border: 8px solid rgba(0, 0, 0, 0.1);
+  border-top-color: #007bff; /* Color de la animación */
+  animation: spin 1s linear infinite;
+}
+
+/* Animación del loader */
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
 }

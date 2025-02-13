@@ -27,12 +27,21 @@ export class ApiService {
 
     // Retorna una Promise
     return new Promise((resolve, reject) => {
-      this.http.post(this.apiUrl + 'generica', data, { headers })
+      this.http.post(this.apiUrl + 'generica', data, { headers, responseType: 'text' })
         .subscribe(
           response => {
             // Resuelve la Promise con la respuesta
             console.log('Respuesta de la API GENERAR LINK:', response);
-            resolve(response);
+            // Extraer el JSON (desde la primera aparición de '{' hasta la última aparición de '}')
+            let jsonString = response.substring(response.indexOf('{'), response.lastIndexOf('}') + 1);
+            // Reemplazar \" por "
+            jsonString = jsonString.replace(/\\"/g, '"');
+            // console.log('Cadena JSON extraída:', jsonString);
+
+            // Convertir la cadena a un objeto JSON
+            const parsedResponse = JSON.parse(jsonString);
+            // console.log('Respuesta parseada:', parsedResponse);
+            resolve(parsedResponse);
           },
           error => {
             console.error('Error details generar link:', error);
@@ -59,7 +68,7 @@ export class ApiService {
           reject(error); // Rechaza la Promise en caso de error
         }
         );
-      });
-    }
-  
+    });
+  }
+
 }

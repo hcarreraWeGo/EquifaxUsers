@@ -1,9 +1,8 @@
 import { DashboardService } from './../dashboard.service';
-import { AlertService } from './../../../shared/components/alert/alert.service';
 import { ApiService } from './../../../shared/services/request-signature/api.service';
 import { Component, OnInit } from '@angular/core';
 import { AbstractControl, FormBuilder, FormGroup, ValidatorFn, Validators } from '@angular/forms';
-import { AlertServiceN } from 'src/app/shared/components/alert-n/alert.service';
+import { AlertServiceN } from '../../../shared/components/alert-n/alert.service';
 
 
 
@@ -15,18 +14,113 @@ import { AlertServiceN } from 'src/app/shared/components/alert-n/alert.service';
 export class RequestSignatureComponent implements OnInit {
   solicitudForm: FormGroup;
   randomTextNumber: string | null = null;
+  isLoading: boolean = false;
 
   provincias: string[] = ['Azuay', 'Bolívar', 'Cañar', 'Carchi', 'Chimborazo', 'Cotopaxi', 'El Oro', 'Esmeraldas', 'Galápagos', 'Guayas', 'Imbabura', 'Loja', 'Los Ríos', 'Manabí', 'Morona Santiago', 'Napo', 'Orellana', 'Pastaza', 'Pichincha', 'Santa Elena', 'Santo Domingo de los Tsáchilas', 'Sucumbíos', 'Tungurahua', 'Zamora Chinchipe'];
   ciudades: string[] = [];
 
   provinciasYciudades: { [key: string]: string[] } = {
-    'Azuay': ['Cuenca', 'Gualaceo', 'Sigsig'],
-    'Bolívar': ['Guaranda', 'San Miguel', 'Chimbo'],
-    'Cañar': ['Azogues', 'La Troncal', 'Biblián'],
-    // Agrega todas las provincias y ciudades correspondientes
-    'Pichincha': ['Quito', 'Cayambe', 'Rumiñahui'],
-    // ...
+    'Azuay': [
+      'Cuenca', 'Girón', 'Gualaceo', 'Nabón', 'Paute', 'Pucará', 'San Fernando',
+      'Santa Isabel', 'Sigsig', 'Oña', 'Chordeleg', 'El Pan', 'Sevilla de Oro',
+      'Guachapala', 'Camilo Ponce Enríquez'
+    ],
+    'Bolívar': [
+      'Guaranda', 'Chillanes', 'Chimbo', 'Echeandía', 'San Miguel', 'Caluma',
+      'Las Naves'
+    ],
+    'Cañar': [
+      'Azogues', 'Biblián', 'Cañar', 'La Troncal', 'El Tambo', 'Déleg', 'Suscal'
+    ],
+    'Carchi': [
+      'Tulcán', 'Bolívar', 'Espejo', 'Mira', 'Montúfar', 'San Pedro de Huaca'
+    ],
+    'Chimborazo': [
+      'Riobamba', 'Alausí', 'Colta', 'Chambo', 'Chunchi', 'Guamote', 'Guano',
+      'Pallatanga', 'Penipe', 'Cumandá'
+    ],
+    'Cotopaxi': [
+      'Latacunga', 'La Maná', 'Pangua', 'Pujilí', 'Salcedo', 'Saquisilí', 'Sigchos'
+    ],
+    'El Oro': [
+      'Machala', 'Arenillas', 'Atahualpa', 'Balsas', 'Chilla', 'El Guabo',
+      'Huaquillas', 'Marcabelí', 'Pasaje', 'Piñas', 'Portovelo', 'Santa Rosa',
+      'Zaruma', 'Las Lajas'
+    ],
+    'Esmeraldas': [
+      'Esmeraldas', 'Eloy Alfaro', 'Muisne', 'Quinindé', 'San Lorenzo', 'Atacames',
+      'Rioverde', 'La Concordia'
+    ],
+    'Galápagos': [
+      'Puerto Baquerizo Moreno', 'Puerto Ayora', 'Puerto Villamil'
+    ],
+    'Guayas': [
+      'Guayaquil', 'Alfredo Baquerizo Moreno (Jujan)', 'Balao', 'Balzar', 'Colimes',
+      'Daule', 'Durán', 'El Empalme', 'El Triunfo', 'Milagro', 'Naranjal',
+      'Naranjito', 'Palestina', 'Pedro Carbo', 'Playas (General Villamil)',
+      'Salitre (Urbina Jado)', 'Samborondón', 'Santa Lucía', 'Simón Bolívar',
+      'Yaguachi', 'Marcelino Maridueña', 'Lomas de Sargentillo', 'Isidro Ayora'
+    ],
+    'Imbabura': [
+      'Ibarra', 'Antonio Ante', 'Cotacachi', 'Otavalo', 'Pimampiro',
+      'San Miguel de Urcuquí'
+    ],
+    'Loja': [
+      'Loja', 'Calvas', 'Catamayo', 'Celica', 'Chaguarpamba', 'Espíndola',
+      'Gonzanamá', 'Macará', 'Olmedo', 'Paltas', 'Pindal', 'Puyango', 'Quilanga',
+      'Saraguro', 'Sozoranga', 'Zapotillo'
+    ],
+    'Los Ríos': [
+      'Babahoyo', 'Baba', 'Buena Fe', 'Mocache', 'Montalvo', 'Palenque',
+      'Puebloviejo', 'Quevedo', 'Quinsaloma', 'Urdaneta', 'Valencia', 'Ventanas',
+      'Vinces'
+    ],
+    'Manabí': [
+      'Portoviejo', 'Bolívar', 'Chone', 'El Carmen', 'Flavio Alfaro', 'Jipijapa',
+      'Jama', 'Jaramijó', 'Junín', 'Manta', 'Montecristi', 'Olmedo', 'Paján',
+      'Pichincha', 'Puerto López', 'Rocafuerte', 'San Vicente', 'Santa Ana',
+      'Sucre', 'Tosagua', '24 de Mayo', 'Pedernales'
+    ],
+    'Morona Santiago': [
+      'Macas', 'Gualaquiza', 'Huamboya', 'Limón Indanza', 'Logroño', 'Morona',
+      'Pablo Sexto', 'Palora', 'San Juan Bosco', 'Santiago', 'Sucúa', 'Taisha',
+      'Tiwintza'
+    ],
+    'Napo': [
+      'Tena', 'Archidona', 'Carlos Julio Arosemena Tola', 'El Chaco', 'Quijos'
+    ],
+    'Orellana': [
+      'Francisco de Orellana (El Coca)', 'Aguarico', 'La Joya de los Sachas',
+      'Loreto'
+    ],
+    'Pastaza': [
+      'Puyo', 'Arajuno', 'Mera', 'Santa Clara'
+    ],
+    'Pichincha': [
+      'Quito', 'Cayambe', 'Mejía', 'Pedro Moncayo', 'Pedro Vicente Maldonado',
+      'Puerto Quito', 'Rumiñahui', 'San Miguel de los Bancos'
+    ],
+    'Santa Elena': [
+      'Santa Elena', 'La Libertad', 'Salinas'
+    ],
+    'Santo Domingo de los Tsáchilas': [
+      'Santo Domingo', 'La Concordia'
+    ],
+    'Sucumbíos': [
+      'Nueva Loja', 'Cascales', 'Cuyabeno', 'Gonzalo Pizarro', 'Lago Agrio',
+      'Putumayo', 'Shushufindi', 'Sucumbíos'
+    ],
+    'Tungurahua': [
+      'Ambato', 'Baños de Agua Santa', 'Cevallos', 'Mocha', 'Patate', 'Quero',
+      'San Pedro de Pelileo', 'Santiago de Píllaro', 'Tisaleo'
+    ],
+    'Zamora Chinchipe': [
+      'Zamora', 'Centinela del Cóndor', 'Chinchipe', 'El Pangui', 'Nangaritza',
+      'Palanda', 'Paquisha', 'Yacuambi', 'Yantzaza'
+    ]
   };
+  
+  
 
   constructor(private fb: FormBuilder,
     private apiService: ApiService,
@@ -91,6 +185,7 @@ export class RequestSignatureComponent implements OnInit {
   }
 
   async onSubmit() {
+    this.isLoading=true;
     if (this.solicitudForm.valid) {
       const formData = this.solicitudForm.value;
       // Genera un nuevo número aleatorio en cada envío
@@ -143,9 +238,7 @@ export class RequestSignatureComponent implements OnInit {
 
       try {
         // Esperar la respuesta de la API
-        const resp = await this.apiService.sendPostApiGenerica(requestBody);
-        const jsonResponse = JSON.parse(resp); // Convertir string a JSON
-        console.log('Código:', jsonResponse.codigo);
+        const resp = await this.apiService.sendPostApiGenerica(requestBody);  
         //console.log("vercodigo",resp.codigo);
         if (resp.codigo === "1") {
           const data = {
@@ -155,16 +248,20 @@ export class RequestSignatureComponent implements OnInit {
 
           // Envio de correo
           var envio = await this.apiService.envioLinkCorreo(data);
-          this.alertService.showAlert('Correo enviado', 'success');
-
-          //console.log("Respuesta de envio de correo",envio.return);
-          // Resetear el formulario
-          this.solicitudForm.reset(); // Reinicia los campos del formulario
+          console.log(envio);
+          if(envio.statusCode == 202){
+            this.isLoading=false;
+            this.alertService.showAlert('Correo enviado', 'success');
+            this.solicitudForm.reset(); // Reinicia los campos del formulario
+          }
+         
         }
         else {
+          this.isLoading=false;
           this.alertService.showAlert(envio.return, 'danger');
         }
       } catch (error) {
+        this.isLoading=false;
         console.error('Error al llamar a la API:', error);
       }
     }

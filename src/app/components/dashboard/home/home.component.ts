@@ -21,13 +21,13 @@ export class HomeComponent implements OnInit{
     this.totalFirmas = this.transformToTargetStructure(totalFirmasResponse.totalFirmas, 'Total documentos');
 
     const restanteFirmasResponse = await this.homeservice.getRestanteFirma();
-    this.restanteFirmas = this.transformToTargetStructure(restanteFirmasResponse.firmasRestantes, 'Firmas restantes');
+    this.restanteFirmas = this.transformToTargetStructure(restanteFirmasResponse.firmasRestantes, 'Firmas utilizadas');
 
     const totalIdentidadResponse = await this.homeservice.getTotalIdentidad();
     this.totalIdentidad = this.transformToTargetStructure(totalIdentidadResponse.totalFirmas, 'Total identidad');
 
     const restantesIdentidadResponse = await this.homeservice.getRestanteIdentidad();
-    this.restantesIdentidad = this.transformToTargetStructure(restantesIdentidadResponse.firmasRestantes, 'Identidad restante');
+    this.restantesIdentidad = this.transformToTargetStructure(restantesIdentidadResponse.firmasRestantes, 'Identidad utilizada');
   }
 
   // Método para transformar la respuesta en la estructura requerida

@@ -1,5 +1,7 @@
 <app-breadcrumb [title]="'Solicitud de firma'" [items]="['Solicitud']" [active_item]="'Form Firmas'"></app-breadcrumb>
 <app-alert></app-alert>
+ <!-- Mostrar el loader mientras se carga el archivo -->
+ <app-loader *ngIf="isLoading"></app-loader>
 <div class="container-fluid">
     <div class="row">
         <div class="col-sm-12 col-xl-6">

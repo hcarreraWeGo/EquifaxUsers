@@ -14,9 +14,8 @@ export class DashboardService {
         "cedula": cedula,
         "numTramite": numTramite
       }
-      const response = await this.baseService.post(`cedula-tramite`, data).toPromise();
-      console.log("Respuesta del servidor:", response);
-      return response;
+      return await this.baseService.post(`cedula-tramite`, data).toPromise();
+      
     } catch (error) {
       console.error("Error al enviar el firmante:", error);
       throw error;
@@ -40,9 +39,8 @@ export class DashboardService {
 
         }
       }
-      const response = await this.baseService.post(`add-cliente`, data).toPromise();
-      console.log("Respuesta del servidor:", response);
-      return response;
+      
+      return await this.baseService.post(`add-cliente`, data).toPromise();
     } catch (error) {
       console.error("Error al enviar el firmante:", error);
       throw error;
@@ -55,4 +53,15 @@ export class DashboardService {
       .get(`clientes/${this.baseService.id}?idProceso=${idProceso}`)
       .toPromise();
   }
+
+  async getIdPaquete(data): Promise<any> {
+    try {
+      return await this.baseService.post(`obtener-id-paquete`, data).toPromise();
+    } catch (error) {
+      console.error("Error consultar el firmante:", error);
+      throw error;
+    }
+  }
+
+
 }

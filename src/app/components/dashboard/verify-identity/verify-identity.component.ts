@@ -74,7 +74,17 @@ export class VerifyIdentityComponent implements OnInit {
       // AGREGAMOS A LA BDD
       var nombres = formData.primerNombre + formData.segundoNombre;
       var apellidos = formData.primerApellido + formData.segundoApellido;
-      await this.dashService.addCliente(nombres, apellidos, formData.cedula, this.randomTextNumber, formData.email, 2);
+      const resp= await this.dashService.addCliente(nombres, apellidos, formData.cedula, this.randomTextNumber, formData.email, 2);
+      const idCliente= resp.data[0].cliente.id;
+      const idSolicitud = resp.data[0].solicitud.id
+      
+      const data={
+        idCliente:idCliente, 
+        idSolicitud:idSolicitud
+      }
+      const idPaquete= await this.dashService.getIdPaquete(data);
+      console.log(idPaquete);
+      const numeroTramite= this.randomTextNumber + "-idCliente:"+idCliente+"-idSolicitud:"+idPaquete
       // Preparamos el cuerpo para la API
       const requestBody = {
         "url": "https://enext.cloud/firmador/links/generador/api/",
@@ -84,7 +94,7 @@ export class VerifyIdentityComponent implements OnInit {
           "Content-Type": "application/json"
         },
         "body": {
-          "noTramite": this.randomTextNumber,
+          "noTramite": numeroTramite,
           "certificado": {
             "perfil": "001",
             "cedula": formData.cedula,
@@ -112,8 +122,9 @@ export class VerifyIdentityComponent implements OnInit {
             "correo": formData.email
           }
 
-          //console.log("Datos a enviar ",data);
+          // envio correo
           var envio = await this.apiService.envioLinkCorreo(data);
+          console.log(envio);
           this.alertService.showAlert("proceso exitoso", 'success');
           //console.log("Respuesta de envio de correo",envio.return);
           // Resetear el formulario

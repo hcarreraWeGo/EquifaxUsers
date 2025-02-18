@@ -193,7 +193,20 @@ export class RequestSignatureComponent implements OnInit {
       // ingreso de cliente
       var nombres = formData.primerNombre + formData.segundoNombre;
       var apellidos = formData.primerApellido + formData.segundoApellido;
-      await this.dashService.addCliente(nombres, apellidos, formData.cedula, this.randomTextNumber, formData.email, 1);
+
+      const resp=await this.dashService.addCliente(nombres, apellidos, formData.cedula, this.randomTextNumber, formData.email, 1);
+
+      const idCliente= resp.data[0].cliente.id;
+      const idSolicitud = resp.data[0].solicitud.id
+      
+      const data={
+        idCliente:idCliente, 
+        idSolicitud:idSolicitud
+      }
+      const idPaquete= await this.dashService.getIdPaquete(data);
+      console.log(idPaquete);
+      const numeroTramite= this.randomTextNumber + "idCliente"+idCliente+"idSolicitud"+idPaquete.idPaquete;
+      console.log(numeroTramite);
       // Preparamos el cuerpo para la API
       const requestBody = {
         "url": "https://enext.cloud/pre_equifax/links/generador/api/",
@@ -203,7 +216,7 @@ export class RequestSignatureComponent implements OnInit {
           "Content-Type": "application/json"
         },
         "body": {
-          "noTramite": this.randomTextNumber,
+          "noTramite": numeroTramite,
           "documentos": [
             {
               "idDocumento": "documento1",
@@ -262,6 +275,7 @@ export class RequestSignatureComponent implements OnInit {
         }
       } catch (error) {
         this.isLoading=false;
+        this.alertService.showAlert("Tenemos un inconveniente, intentalo mas tarde", 'danger');
         console.error('Error al llamar a la API:', error);
       }
     }

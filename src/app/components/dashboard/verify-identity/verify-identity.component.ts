@@ -85,7 +85,7 @@ export class VerifyIdentityComponent implements OnInit {
       }
       const idPaquete= await this.dashService.getIdPaquete(data);
       //console.log(idPaquete);
-      const numeroTramite= this.randomTextNumber + "-idSolcitud:"+idSolicitud+"-idPaquete:"+idPaquete;
+      const numeroTramite= this.randomTextNumber + "-idSolcitud"+idSolicitud+"-idPaquete"+idPaquete.idPaquete;
       // Preparamos el cuerpo para la API
       const requestBody = {
         "url": "https://enext.cloud/firmador/links/generador/api/",

@@ -13,7 +13,7 @@ export class VerifyIdentityComponent implements OnInit {
 
   solicitudForm: FormGroup;
   randomTextNumber: string | null = null;
-
+  isLoading: boolean = false;
 
   constructor(private fb: FormBuilder,
     private apiService: ApiService,
@@ -67,6 +67,7 @@ export class VerifyIdentityComponent implements OnInit {
   }
 
   async onSubmit() {
+    this.isLoading=true;
     if (this.solicitudForm.valid) {
       // Genera un nuevo número aleatorio en cada envío
       this.randomTextNumber = this.generateRandomTextNumber();
@@ -83,8 +84,8 @@ export class VerifyIdentityComponent implements OnInit {
         idSolicitud:idSolicitud
       }
       const idPaquete= await this.dashService.getIdPaquete(data);
-      console.log(idPaquete);
-      const numeroTramite= this.randomTextNumber + "-idCliente:"+idCliente+"-idSolicitud:"+idPaquete
+      //console.log(idPaquete);
+      const numeroTramite= this.randomTextNumber + "-idSolcitud:"+idSolicitud+"-idPaquete:"+idPaquete;
       // Preparamos el cuerpo para la API
       const requestBody = {
         "url": "https://enext.cloud/firmador/links/generador/api/",
@@ -124,16 +125,22 @@ export class VerifyIdentityComponent implements OnInit {
 
           // envio correo
           var envio = await this.apiService.envioLinkCorreo(data);
-          console.log(envio);
-          this.alertService.showAlert("proceso exitoso", 'success');
-          //console.log("Respuesta de envio de correo",envio.return);
-          // Resetear el formulario
-          this.solicitudForm.reset(); // Reinicia los campos del formulario
+          // console.log(envio);
+          if(envio.statusCode == 202){
+            this.isLoading=false;
+            this.alertService.showAlert("proceso exitoso", 'success');
+            this.solicitudForm.reset();
+          }
+         
+          
         }
         else {
+          this.isLoading=false;
           this.alertService.showAlert(envio.return, 'danger');
         }
       } catch (error) {
+        this.isLoading=false;
+        this.alertService.showAlert("Tenemos un inconveniente, intentalo mas tarde", 'danger');
         console.error('Error al llamar a la API:', error);
       }
     }

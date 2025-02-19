@@ -61,10 +61,10 @@ export class ApiService {
         .toPromise()
         .then(response => {
           // Resuelve la Promise con la respuesta
-          console.log('Respuesta envio de correo:', response);
+          // console.log('Respuesta envio de correo:', response);
           resolve(response);
         }, error => {
-          console.error('Error details envio de correo:', error);
+          // console.error('Error details envio de correo:', error);
           reject(error); // Rechaza la Promise en caso de error
         }
         );

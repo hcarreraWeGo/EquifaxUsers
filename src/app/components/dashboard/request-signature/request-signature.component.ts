@@ -204,8 +204,8 @@ export class RequestSignatureComponent implements OnInit {
         idSolicitud:idSolicitud
       }
       const idPaquete= await this.dashService.getIdPaquete(data);
-      console.log(idPaquete);
-      const numeroTramite= this.randomTextNumber + "idCliente"+idCliente+"idSolicitud"+idPaquete.idPaquete;
+      //console.log(idPaquete);
+      const numeroTramite= this.randomTextNumber + "-idSolcitud:"+idSolicitud+"-idPaquete:"+idPaquete;
       console.log(numeroTramite);
       // Preparamos el cuerpo para la API
       const requestBody = {

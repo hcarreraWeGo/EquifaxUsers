@@ -6,7 +6,7 @@ export class HomeService {
   constructor(private baseService: BaseService) {}
 
   async getTotalFirma(): Promise<any> {
-    console.log(this.baseService.id);
+    //console.log(this.baseService.id);
     return await this.baseService
       .get1(`paquete-transacciones/total/${this.baseService.id}/1`)
       .toPromise();

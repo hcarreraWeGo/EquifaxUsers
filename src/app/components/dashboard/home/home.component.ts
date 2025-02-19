@@ -18,16 +18,16 @@ export class HomeComponent implements OnInit{
   public restantesIdentidad = {};
   async ngOnInit(): Promise<void> {
     const totalFirmasResponse = await this.homeservice.getTotalFirma();
-    this.totalFirmas = this.transformToTargetStructure(totalFirmasResponse.totalFirmas, 'Total documentos');
+    this.totalFirmas = this.transformToTargetStructure(totalFirmasResponse.totalFirmas, 'Total Firmas');
 
     const restanteFirmasResponse = await this.homeservice.getRestanteFirma();
-    this.restanteFirmas = this.transformToTargetStructure(restanteFirmasResponse.firmasRestantes, 'Firmas utilizadas');
+    this.restanteFirmas = this.transformToTargetStructure(restanteFirmasResponse.firmasRestantes, 'Firmas Restantes');
 
     const totalIdentidadResponse = await this.homeservice.getTotalIdentidad();
     this.totalIdentidad = this.transformToTargetStructure(totalIdentidadResponse.totalFirmas, 'Total identidad');
 
     const restantesIdentidadResponse = await this.homeservice.getRestanteIdentidad();
-    this.restantesIdentidad = this.transformToTargetStructure(restantesIdentidadResponse.firmasRestantes, 'Identidad utilizada');
+    this.restantesIdentidad = this.transformToTargetStructure(restantesIdentidadResponse.firmasRestantes, 'Identidad Restante');
   }
 
   // Método para transformar la respuesta en la estructura requerida

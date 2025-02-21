@@ -29,4 +29,5 @@ export class HomeService {
       .get1(`empresas/procesos-saldo/${this.baseService.idEmpresa}/2`)
       .toPromise();
   }
+  
 }

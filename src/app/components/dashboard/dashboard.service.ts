@@ -63,5 +63,22 @@ export class DashboardService {
     }
   }
 
+  async GenerarTexto(data):Promise<any>{
+    try {
+      return await this.baseService.post(`empresas/generar-texto/${this.baseService.idEmpresa}`, data).toPromise();
+    } catch (error) {
+      console.error("Error al enviar el firmante:", error);
+      throw error;
+    }
+  }
+
+  async obtenerPdf(data):Promise<any>{
+    try {
+      return await this.baseService.postExterno(`generar_pdf`, data).toPromise();
+    } catch (error) {
+      console.error("Error al enviar el firmante:", error);
+      throw error;
+    }
+  }
 
 }

@@ -10,6 +10,7 @@ import { Router } from '@angular/router';
 @Injectable({ providedIn: "root" })
 export class BaseService {
   private apiUrl: string = environment.apiUrlBase;
+  private apiPdf: string = environment.apiUrlPdf;
   public id: string = "1";
   public idEmpresa: string = "1";
   constructor(private _http: HttpClient,
@@ -22,6 +23,8 @@ export class BaseService {
     if (data) {
       this.id = data.id;
       this.idEmpresa= data.idEmpresa;
+      //this.nombreEmpresa = data.nombreEmpresa;
+      localStorage.setItem('nombreEmpresa', data.nombreEmpresa);
     }
   }
 
@@ -62,6 +65,13 @@ export class BaseService {
   post(service: string, body: any): Observable<any> {
     // console.log(`${this.apiUrl}${service}`)
     return this._http.post<any>(`${this.apiUrl}${service}`, body).pipe(
+      map(data => data),
+      catchError(this.handleError.bind(this))
+    );
+  }
+  postExterno(service: string, body: any): Observable<any> {
+    // console.log(`${this.apiUrl}${service}`)
+    return this._http.post<any>(`${this.apiPdf}${service}`, body).pipe(
       map(data => data),
       catchError(this.handleError.bind(this))
     );

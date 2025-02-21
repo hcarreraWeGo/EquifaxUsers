@@ -119,8 +119,8 @@ export class RequestSignatureComponent implements OnInit {
       'Palanda', 'Paquisha', 'Yacuambi', 'Yantzaza'
     ]
   };
-  
-  
+
+
 
   constructor(private fb: FormBuilder,
     private apiService: ApiService,
@@ -133,22 +133,22 @@ export class RequestSignatureComponent implements OnInit {
     this.solicitudForm = this.fb.group({
       primerNombre: ['', [
         Validators.required,
-        Validators.pattern(/^[a-zA-Z\s]+$/)
+        Validators.pattern(/^[a-zA-ZñÑáéíóúÁÉÍÓÚ\s]+$/)
       ]
       ], // Solo letras
       segundoNombre: ['', [
         Validators.required,
-        Validators.pattern(/^[a-zA-Z\s]+$/)
+        Validators.pattern(/^[a-zA-ZñÑáéíóúÁÉÍÓÚ\s]+$/)
       ]
       ], // Solo letras
       primerApellido: ['', [
         Validators.required,
-        Validators.pattern(/^[a-zA-Z\s]+$/)
+        Validators.pattern(/^[a-zA-ZñÑáéíóúÁÉÍÓÚ\s]+$/)
       ]
       ], // Solo letras
       segundoApellido: ['', [
         Validators.required,
-        Validators.pattern(/^[a-zA-Z\s]+$/)
+        Validators.pattern(/^[a-zA-ZñÑáéíóúÁÉÍÓÚ\s]+$/)
       ]
       ], // Solo letras
       cedula: ['', [
@@ -185,7 +185,7 @@ export class RequestSignatureComponent implements OnInit {
   }
 
   async onSubmit() {
-    this.isLoading=true;
+    this.isLoading = true;
     if (this.solicitudForm.valid) {
       const formData = this.solicitudForm.value;
       // Genera un nuevo número aleatorio en cada envío
@@ -194,19 +194,37 @@ export class RequestSignatureComponent implements OnInit {
       var nombres = formData.primerNombre + formData.segundoNombre;
       var apellidos = formData.primerApellido + formData.segundoApellido;
 
-      const resp=await this.dashService.addCliente(nombres, apellidos, formData.cedula, this.randomTextNumber, formData.email, 1);
+      const resp = await this.dashService.addCliente(nombres, apellidos, formData.cedula, this.randomTextNumber, formData.email, 1);
 
-      const idCliente= resp.data[0].cliente.id;
+      const idCliente = resp.data[0].cliente.id;
       const idSolicitud = resp.data[0].solicitud.id
-      
-      const data={
-        idCliente:idCliente, 
-        idSolicitud:idSolicitud
+
+      const data = {
+        idCliente: idCliente,
+        idSolicitud: idSolicitud
       }
-      const idPaquete= await this.dashService.getIdPaquete(data);
+      const idPaquete = await this.dashService.getIdPaquete(data);
       //console.log(idPaquete);
-      const numeroTramite= this.randomTextNumber + "-idSolcitud"+idSolicitud+"-idPaquete"+idPaquete.idPaquete;
-      console.log(numeroTramite);
+      const numeroTramite = this.randomTextNumber + "-idSolcitud" + idSolicitud + "-idPaquete" + idPaquete.idPaquete;
+      //generar pdf
+      const texto = {
+        "nombres": `${formData.primerNombre}  ${formData.segundoNombre}`,
+        "apellidos": `${formData.primerApellido}  ${formData.segundoApellido}`,
+        "cedula": formData.cedula,
+        "empresa": localStorage.getItem('nombreEmpresa'),
+        "correo": formData.email,
+        "provincia": formData.provincia,
+        "ciudad": formData.ciudad,
+        "direccion": formData.direccion,
+        "telefono": formData.telefono,
+      }
+      const generarTexto = await this.dashService.GenerarTexto(texto);
+      
+      const pdf = {
+        "texto": generarTexto.texto
+      }
+      const generarPdf = await this.dashService.obtenerPdf(pdf);
+      console.log(generarPdf);
       // Preparamos el cuerpo para la API
       const requestBody = {
         "url": "https://enext.cloud/pre_equifax/links/generador/api/",
@@ -251,7 +269,7 @@ export class RequestSignatureComponent implements OnInit {
 
       try {
         // Esperar la respuesta de la API
-        const resp = await this.apiService.sendPostApiGenerica(requestBody);  
+        const resp = await this.apiService.sendPostApiGenerica(requestBody);
         //console.log("vercodigo",resp.codigo);
         if (resp.codigo === "1") {
           const data = {
@@ -262,19 +280,19 @@ export class RequestSignatureComponent implements OnInit {
           // Envio de correo
           var envio = await this.apiService.envioLinkCorreo(data);
           console.log(envio);
-          if(envio.statusCode == 202){
-            this.isLoading=false;
+          if (envio.statusCode == 202) {
+            this.isLoading = false;
             this.alertService.showAlert('Correo enviado', 'success');
             this.solicitudForm.reset(); // Reinicia los campos del formulario
           }
-         
+
         }
         else {
-          this.isLoading=false;
+          this.isLoading = false;
           this.alertService.showAlert(envio.return, 'danger');
         }
       } catch (error) {
-        this.isLoading=false;
+        this.isLoading = false;
         this.alertService.showAlert("Tenemos un inconveniente, intentalo mas tarde", 'danger');
         console.error('Error al llamar a la API:', error);
       }

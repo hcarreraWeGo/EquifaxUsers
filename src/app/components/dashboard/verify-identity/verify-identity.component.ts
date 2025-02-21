@@ -26,22 +26,22 @@ export class VerifyIdentityComponent implements OnInit {
     this.solicitudForm = this.fb.group({
       primerNombre: ['', [
         Validators.required,
-        Validators.pattern(/^[a-zA-Z\s]+$/)
+        Validators.pattern(/^[a-zA-ZñÑáéíóúÁÉÍÓÚ\s]+$/)
       ]
       ], // Solo letras
       segundoNombre: ['', [
         Validators.required,
-        Validators.pattern(/^[a-zA-Z\s]+$/)
+        Validators.pattern(/^[a-zA-ZñÑáéíóúÁÉÍÓÚ\s]+$/)
       ]
       ], // Solo letras
       primerApellido: ['', [
         Validators.required,
-        Validators.pattern(/^[a-zA-Z\s]+$/)
+        Validators.pattern(/^[a-zA-ZñÑáéíóúÁÉÍÓÚ\s]+$/)
       ]
       ], // Solo letras
       segundoApellido: ['', [
         Validators.required,
-        Validators.pattern(/^[a-zA-Z\s]+$/)
+        Validators.pattern(/^[a-zA-ZñÑáéíóúÁÉÍÓÚ\s]+$/)
       ]
       ], // Solo letras
       cedula: ['', [

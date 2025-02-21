@@ -75,6 +75,7 @@ export class VerifyIdentityComponent implements OnInit {
       // AGREGAMOS A LA BDD
       var nombres = formData.primerNombre + formData.segundoNombre;
       var apellidos = formData.primerApellido + formData.segundoApellido;
+      // guarda informacion de la persona
       const resp= await this.dashService.addCliente(nombres, apellidos, formData.cedula, this.randomTextNumber, formData.email, 2);
       const idCliente= resp.data[0].cliente.id;
       const idSolicitud = resp.data[0].solicitud.id
@@ -86,6 +87,9 @@ export class VerifyIdentityComponent implements OnInit {
       const idPaquete= await this.dashService.getIdPaquete(data);
       //console.log(idPaquete);
       const numeroTramite= this.randomTextNumber + "-idSolcitud"+idSolicitud+"-idPaquete"+idPaquete.idPaquete;
+      //consulta
+      
+
       // Preparamos el cuerpo para la API
       const requestBody = {
         "url": "https://enext.cloud/firmador/links/generador/api/",

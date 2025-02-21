@@ -11,7 +11,7 @@ import { Router } from '@angular/router';
 export class BaseService {
   private apiUrl: string = environment.apiUrlBase;
   public id: string = "1";
-
+  public idEmpresa: string = "1";
   constructor(private _http: HttpClient,
     private alertService: AlertServiceN,
     private localStorageService: LocalStorageService,
@@ -21,6 +21,7 @@ export class BaseService {
     const data = JSON.parse(this.localStorageService.getItem("data"));
     if (data) {
       this.id = data.id;
+      this.idEmpresa= data.idEmpresa;
     }
   }
 

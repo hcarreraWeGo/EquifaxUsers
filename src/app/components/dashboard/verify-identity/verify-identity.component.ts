@@ -88,7 +88,11 @@ export class VerifyIdentityComponent implements OnInit {
       //console.log(idPaquete);
       const numeroTramite= this.randomTextNumber + "-idSolcitud"+idSolicitud+"-idPaquete"+idPaquete.idPaquete;
       //consulta
-      
+      const updateData={
+        "numTramite":this.randomTextNumber,
+        "nuevoNumTramite":numeroTramite
+      }
+      const updateNumeroTramite= await this.dashService.updateClienteNumeroTramite(updateData);
 
       // Preparamos el cuerpo para la API
       const requestBody = {

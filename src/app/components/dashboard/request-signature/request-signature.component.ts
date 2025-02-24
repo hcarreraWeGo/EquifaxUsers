@@ -204,8 +204,12 @@ export class RequestSignatureComponent implements OnInit {
         idSolicitud: idSolicitud
       }
       const idPaquete = await this.dashService.getIdPaquete(data);
-      //console.log(idPaquete);
       const numeroTramite = this.randomTextNumber + "-idSolcitud" + idSolicitud + "-idPaquete" + idPaquete.idPaquete;
+      const updateData={
+        "numTramite":this.randomTextNumber,
+        "nuevoNumTramite":numeroTramite
+      }
+      const updateNumeroTramite= await this.dashService.updateClienteNumeroTramite(updateData);
       //generar pdf
       const texto = {
         "nombres": `${formData.primerNombre}  ${formData.segundoNombre}`,

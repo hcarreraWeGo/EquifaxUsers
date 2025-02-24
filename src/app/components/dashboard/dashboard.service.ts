@@ -81,4 +81,13 @@ export class DashboardService {
     }
   }
 
+  async updateClienteNumeroTramite(data):Promise<any>{
+    try {
+      return await this.baseService.put(`clientes/update-num-tramite`,data).toPromise();
+    } catch (error) {
+      console.error("Error al enviar el firmante:", error);
+      throw error;
+    }
+  }
+
 }

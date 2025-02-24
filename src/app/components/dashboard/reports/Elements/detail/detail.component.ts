@@ -33,6 +33,7 @@ export class DetailComponent {
   async ngOnInit(): Promise<void> {
     console.log("Document ID tramite como @Input:", this.numTramite);
     console.log("Document ID proceso como @Input:", this.numProceso);
+    //console.log(this.numTramite);
     this.loadDataTable();
   }
 

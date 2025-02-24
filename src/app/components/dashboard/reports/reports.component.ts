@@ -1,8 +1,8 @@
+import { SliderService } from './../../../shared/components/sidebar/slidebar.service';
 import { NgbdSortableHeader, SortEvent } from './../../../shared/directives/NgbdSortableHeader';
 import { TableService } from './../../../shared/services/table.service';
 import { Component, QueryList, ViewChildren } from '@angular/core';
 import { Observable, of } from 'rxjs';
-import { SliderService } from 'src/app/shared/components/sidebar/slidebar.service';
 import { DashboardService } from '../dashboard.service';
 
 
@@ -40,7 +40,7 @@ export class ReportsComponent {
     this.service.setUserData(this.clientes); // Actualiza el servicio con los nuevos datos
     this.tableItem$ = this.service.tableItem$;
     this.total$ = this.service.total$;
-    // console.log("respuesta de endpoint con los clientes retornando",this.clientes);
+    //console.log("respuesta de endpoint con los clientes retornando",this.clientes);
 
   }
 

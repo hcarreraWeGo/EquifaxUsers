@@ -69,6 +69,14 @@ export class BaseService {
       catchError(this.handleError.bind(this))
     );
   }
+
+  put(service: string, body: any): Observable<any> {
+    return this._http.put<any>(`${this.apiUrl}${service}`, body).pipe(
+      map(data => data),
+      catchError(this.handleError.bind(this))
+    );
+  }
+  
   postExterno(service: string, body: any): Observable<any> {
     // console.log(`${this.apiUrl}${service}`)
     return this._http.post<any>(`${this.apiPdf}${service}`, body).pipe(

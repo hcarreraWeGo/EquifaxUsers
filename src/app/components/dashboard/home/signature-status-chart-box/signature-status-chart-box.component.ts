@@ -7,11 +7,11 @@ import { Component, Input, SimpleChanges } from '@angular/core';
 })
 export class SignatureStatusChartBoxComponent {
 
-  @Input() data: any
+  @Input() data: any={}
   constructor() {}
 
   ngOnChanges(changes: SimpleChanges): void {
-    if (changes['data']) {
+    if (changes['data'] && this.data?.data) {
       console.log('Data received in child component:', this.data.data);
     }
   }

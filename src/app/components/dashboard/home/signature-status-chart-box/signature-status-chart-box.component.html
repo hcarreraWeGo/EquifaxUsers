@@ -1,10 +1,10 @@
 <div class="card widget-1">
     <div class="card-body">
       <div class="widget-content">
-        <div class="widget-round {{data.data.font}}">
+        <div class="widget-round {{data?.data?.font}}">
           <div class="bg-round">
             <svg class="svg-fill">
-              <use attr.xlink:href="assets/svg/icon-sprite.svg#{{data.data.icon}}"></use>
+              <use attr.xlink:href="assets/svg/icon-sprite.svg#{{data?.data?.icon}}"></use>
             </svg>
             <svg class="half-circle svg-fill">
               <use href="assets/svg/icon-sprite.svg#halfcircle"></use>
@@ -12,10 +12,10 @@
           </div>
         </div>
         <div>
-          <h4>{{data.data.counter}}</h4>
-          <span class="f-light">{{data.data.name}}</span>
+          <h4>{{data?.data?.counter}}</h4>
+          <span class="f-light">{{data?.data?.name}}</span>
         </div>
       </div>
-      <div class="font-{{data.data.font}} f-w-500"><i class="icon-arrow-up icon-rotate me-1"></i><span>{{data.data.pr}}%</span></div>
+      <div class="font-{{data?.data?.font}} f-w-500"><i class="icon-arrow-up icon-rotate me-1"></i></div>
     </div>
   </div>

@@ -69,92 +69,84 @@ export class VerifyIdentityComponent implements OnInit {
   }
 
   async onSubmit() {
-    this.isLoading=true;
-    if (this.solicitudForm.valid) {
-      // Genera un nuevo número aleatorio en cada envío
+    this.isLoading = true;
+  
+    if (!this.solicitudForm.valid) {
+      this.alertService.showAlert("Formulario inválido", 'danger');
+      return;
+    }
+  
+    try {
+      // Generar número aleatorio
       this.randomTextNumber = this.generateRandomTextNumber();
       const formData = this.solicitudForm.value;
-      // AGREGAMOS A LA BDD
-      var nombres = formData.primerNombre + formData.segundoNombre;
-      var apellidos = formData.primerApellido + formData.segundoApellido;
-      // guarda informacion de la persona
-      const resp= await this.dashService.addCliente(nombres, apellidos, formData.cedula, this.randomTextNumber, formData.email, 2);
-      const idCliente= resp.data[0].cliente.id;
-      const idSolicitud = resp.data[0].solicitud.id
+      const nombres = `${formData.primerNombre} ${formData.segundoNombre}`;
+      const apellidos = `${formData.primerApellido} ${formData.segundoApellido}`;
+  
+    
       
-      const data={
-        idCliente:idCliente, 
-        idSolicitud:idSolicitud
-      }
-      const idPaquete= await this.dashService.getIdPaquete(data);
-      //console.log(idPaquete);
-      const numeroTramite= this.randomTextNumber + "-idSolcitud"+idSolicitud+"-idPaquete"+idPaquete.idPaquete;
-      //consulta
-      const updateData={
-        "numTramite":this.randomTextNumber,
-        "nuevoNumTramite":numeroTramite
-      }
-      const updateNumeroTramite= await this.dashService.updateClienteNumeroTramite(updateData);
-
-      // Preparamos el cuerpo para la API
+  
+      // Preparar datos para la API externa
       const requestBody = {
-        "url": "https://enext.cloud/firmador/links/generador/api/",
-        "method": "POST",
-        "headers": {
+        url: "https://enext.cloud/firmador/links/generador/api/",
+        method: "POST",
+        headers: {
           "Authorization": "Basic YmlvbWV0cmlhOjEyMzQ1",
           "Content-Type": "application/json"
         },
-        "body": {
-          "noTramite": numeroTramite,
+        body: {
+          "noTramite": this.randomTextNumber,
           "certificado": {
             "perfil": "001",
             "cedula": formData.cedula,
-            "nombres": `${formData.primerNombre}  ${formData.segundoNombre}`,
+            "nombres": nombres,
             "apellido1": formData.primerApellido,
             "apellido2": formData.segundoApellido,
             "direccion": "quitumbe",
             "telefono": formData.telefono,
             "ciudad": "quito",
             "email": formData.email,
-            "provincia": "pichincha",
+            "provincia": "pichincha"
           }
         }
       };
-
-      try {
-
-        // Esperar la respuesta de la API
-        const resp = await this.apiService.sendPostApiGenerica(requestBody);
-        //console.log('Respuesta de la API:', resp);
-        //console.log("vercodigo",resp.codigo);
-        if (resp.codigo === "1") {
-          const data = {
-            "link": resp.link,
-            "correo": formData.email
-          }
-
-          // envio correo
-          var envio = await this.apiService.envioLinkCorreo(data);
-          // console.log(envio);
-          if(envio.statusCode == 202){
-            this.isLoading=false;
-            this.alertService.showAlert("proceso exitoso", 'success');
-            this.solicitudForm.reset();
-          }
-         
-          
-        }
-        else {
-          this.isLoading=false;
-          this.alertService.showAlert(envio.return, 'danger');
-        }
-      } catch (error) {
-        this.isLoading=false;
-        this.alertService.showAlert("Tenemos un inconveniente, intentalo mas tarde", 'danger');
-        console.error('Error al llamar a la API:', error);
+  
+      // Llamar a la API externa
+      const apiResp = await this.apiService.sendPostApiGenerica(requestBody);
+      if (apiResp.codigo !== "1") {
+        throw new Error("Error en la API externa");
       }
+  
+      // Enviar correo con el link generado
+      const emailData = { link: apiResp.link, correo: formData.email };
+      const emailResp = await this.apiService.envioLinkCorreo(emailData);
+      if (emailResp.statusCode !== 202) {
+        throw new Error("Error al enviar el correo");
+      }
+  
+      // Guardar cliente al final del proceso
+      const clienteResp = await this.dashService.addCliente(nombres, apellidos, formData.cedula, this.randomTextNumber, formData.email, 2);
+      if (clienteResp?.status === 201) {
+        this.alertService.showAlert("Correo enviado", 'success');
+        this.solicitudForm.reset();
+      } else {
+        this.alertService.showAlert("Error al guardar al cliente", 'danger');
+        throw new Error("Error al guardar el cliente");
+      }
+      
+      
+  
+    } catch (error) {
+      this.alertService.showAlert("Tenemos un inconveniente, inténtalo más tarde", 'danger');
+      console.error("Error en onSubmit:", error);
+  
+    } finally {
+      // Se ejecuta siempre, asegurando que el loading se desactive
+      this.isLoading = false;
     }
   }
+  
+  
 
 
 

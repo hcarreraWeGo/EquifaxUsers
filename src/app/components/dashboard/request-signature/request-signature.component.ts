@@ -293,13 +293,16 @@ export class RequestSignatureComponent implements OnInit {
         1
       );
   
-      if (!clienteResponse.data || !clienteResponse.data[0]) {
-        throw new Error('No se pudo registrar el cliente.');
-      } 
-  
-      // Éxito
+      if (clienteResponse?.status === 201) {
+        // Éxito
       this.alertService.showAlert('Correo enviado', 'success');
       this.solicitudForm.reset(); // Reiniciar el formulario
+      } else {
+        this.alertService.showAlert("Error al guardar al cliente", 'danger');
+        throw new Error("Error al guardar el cliente");
+      }
+  
+      
     } catch (error) {
       console.error('Error en onSubmit:', error);
       this.alertService.showAlert(

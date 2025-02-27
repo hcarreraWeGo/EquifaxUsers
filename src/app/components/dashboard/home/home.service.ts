@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import { ChangeDetectorRef, Injectable } from '@angular/core';
 import { BaseService } from './../../../shared/services/base.service';
 
 @Injectable({ providedIn: "root" })
@@ -6,8 +6,8 @@ export class HomeService {
   constructor(private baseService: BaseService) {}
 
   async getTotalFirma(): Promise<any> {
-    // console.log(this.baseService.id);
-    // console.log(this.baseService.idEmpresa);
+    console.log("id-home",this.baseService.id);
+    console.log("idEmpresa-home",this.baseService.idEmpresa);
     return await this.baseService
       .get1(`empresas/procesos-total/${this.baseService.idEmpresa}/1`)
       .toPromise();

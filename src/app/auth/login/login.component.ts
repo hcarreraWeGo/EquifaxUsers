@@ -19,7 +19,7 @@ export class LoginComponent implements OnInit {
   constructor(
     private fb: FormBuilder,
     public router: Router,
-    private loginService: LoginService 
+    private loginService: LoginService,
   ) {
     this.loginForm = this.fb.group({
       email: ["", [Validators.required, Validators.email]],
@@ -37,7 +37,9 @@ export class LoginComponent implements OnInit {
      const decode= jwtDecode(resp.token);
       this.loginService.baseService.setItem("data", JSON.stringify(decode));
       this.loginService.baseService.id=decode["id"];
-      
+      this.loginService.baseService.idEmpresa=decode["idEmpresa"];
+      sessionStorage.setItem('nombreEmpresa',decode["nombreEmpresa"]);
+      console.log("seguimiento",this.loginService.baseService.id);
       // Captura el email de los datos decodificados
       const username = decode["username"];
     

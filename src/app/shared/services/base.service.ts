@@ -1,10 +1,14 @@
+
 import { LocalStorageService } from './local.storage.service';
 import { AlertServiceN } from './../components/alert-n/alert.service';
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';
-import { catchError, map, Observable, throwError } from 'rxjs';
+import { catchError, lastValueFrom, map, Observable, throwError } from 'rxjs';
 import { environment } from './../../../environments/environment.prod';
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
+import { SessionStorageService } from './sessionStorage.service';
+
+
 
 
 @Injectable({ providedIn: "root" })
@@ -16,15 +20,16 @@ export class BaseService {
   constructor(private _http: HttpClient,
     private alertService: AlertServiceN,
     private localStorageService: LocalStorageService,
-    private router: Router
+    private sessionStorageService: SessionStorageService,
+    private router: Router,
+    
 
   ) {
-    const data = JSON.parse(this.localStorageService.getItem("data"));
+    const data = JSON.parse(this.sessionStorageService.getItem("data"));
     if (data) {
       this.id = data.id;
-      this.idEmpresa= data.idEmpresa;
-      //this.nombreEmpresa = data.nombreEmpresa;
-      localStorage.setItem('nombreEmpresa', data.nombreEmpresa);
+      this.idEmpresa= data.idEmpresa;    
+     
     }
   }
 
@@ -34,24 +39,27 @@ export class BaseService {
   //     catchError(this.handleError.bind(this))
   //   );
   // }
-  login(body: any): Observable<any> {
-    
-    return this._http.post<any>(`${this.apiUrl}auth/login`, body).pipe(
-      map(data => {
-        // Almacena el token
-        if (data && data.data && data.data.token) {
-          localStorage.setItem('token', data.data.token); // O usa sessionStorage
-          //console.log(data.data.token);
-        }
-        return data.data;
-      }),
-      catchError(this.handleError.bind(this))
+  async login(body: any): Promise<any> {
+    return await lastValueFrom(
+      this._http.post<any>(`${this.apiUrl}auth/login`, body).pipe(
+        map(data => {
+          if (data?.data?.token) {
+            localStorage.setItem('token', data.data.token);
+          }
+          return data.data;
+        }),
+        catchError(this.handleError.bind(this))
+      )
     );
   }
+  
   logout(): void {
     // Limpia el almacenamiento local y de sesión
     this.localStorageService.clearAll();
+    this.sessionStorageService.clearAll();
+    localStorage.clear();
     sessionStorage.clear();
+    window.location.reload();
     // Redirige al usuario al login y modifica el historial
     this.router.navigateByUrl('/auth/login').then(() => {
       // Evita que el usuario retroceda a la página anterior

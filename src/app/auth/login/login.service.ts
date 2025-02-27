@@ -12,8 +12,6 @@ export class LoginService {
 
   
   async login(playload): Promise<any> {
-    return await this.baseService
-      .login(playload)
-      .toPromise();
+    return await this.baseService.login(playload);
   }
 }

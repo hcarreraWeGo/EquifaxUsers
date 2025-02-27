@@ -22,6 +22,7 @@ import { AppComponent } from './app.component';
 import { OverlayModule } from '@angular/cdk/overlay';
 import { StorageService } from './shared/services/storage';
 import { LocalStorageService } from './shared/services/local.storage.service';
+import { SessionStorageService } from './shared/services/sessionStorage.service';
 
 
 export function HttpLoaderFactory(http: HttpClient) {
@@ -59,7 +60,7 @@ export function HttpLoaderFactory(http: HttpClient) {
     // for Core use:
     LoadingBarModule
   ],
-  providers: [CookieService,StorageService,LocalStorageService],
+  providers: [CookieService,StorageService,LocalStorageService,SessionStorageService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

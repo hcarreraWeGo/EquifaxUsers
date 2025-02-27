@@ -3,6 +3,7 @@ import { ApiService } from './../../../shared/services/request-signature/api.ser
 import { Component, OnInit } from '@angular/core';
 import { AbstractControl, FormBuilder, FormGroup, ValidatorFn, Validators } from '@angular/forms';
 import { AlertServiceN } from '../../../shared/components/alert-n/alert.service';
+import { emailValidator } from '../../../shared/validators/email.validator';
 
 
 
@@ -171,7 +172,8 @@ export class RequestSignatureComponent implements OnInit {
       direccion: ['', Validators.required],
       email: ['', [
         Validators.required,
-        Validators.email
+        Validators.email,
+        emailValidator()
       ]
       ],// Validación de correo
       telefono: ['', [
@@ -186,117 +188,126 @@ export class RequestSignatureComponent implements OnInit {
 
   async onSubmit() {
     this.isLoading = true;
-    if (this.solicitudForm.valid) {
-      const formData = this.solicitudForm.value;
-      // Genera un nuevo número aleatorio en cada envío
-      this.randomTextNumber = this.generateRandomTextNumber();
-      // ingreso de cliente
-      var nombres = formData.primerNombre + formData.segundoNombre;
-      var apellidos = formData.primerApellido + formData.segundoApellido;
-
-      const resp = await this.dashService.addCliente(nombres, apellidos, formData.cedula, this.randomTextNumber, formData.email, 1);
-
-      const idCliente = resp.data[0].cliente.id;
-      const idSolicitud = resp.data[0].solicitud.id
-
-      const data = {
-        idCliente: idCliente,
-        idSolicitud: idSolicitud
-      }
-      const idPaquete = await this.dashService.getIdPaquete(data);
-      const numeroTramite = this.randomTextNumber + "-idSolcitud" + idSolicitud + "-idPaquete" + idPaquete.idPaquete;
-      const updateData={
-        "numTramite":this.randomTextNumber,
-        "nuevoNumTramite":numeroTramite
-      }
-      const updateNumeroTramite= await this.dashService.updateClienteNumeroTramite(updateData);
-      //generar pdf
-      const texto = {
-        "nombres": `${formData.primerNombre}  ${formData.segundoNombre}`,
-        "apellidos": `${formData.primerApellido}  ${formData.segundoApellido}`,
-        "cedula": formData.cedula,
-        "empresa": localStorage.getItem('nombreEmpresa'),
-        "correo": formData.email,
-        "provincia": formData.provincia,
-        "ciudad": formData.ciudad,
-        "direccion": formData.direccion,
-        "telefono": formData.telefono,
-      }
-      const generarTexto = await this.dashService.GenerarTexto(texto);
-      //console.log(generarTexto.pdf.pdf_base64);
-      
-      
-      // Preparamos el cuerpo para la API
-      const requestBody = {
-        "url": "https://enext.cloud/pre_equifax/links/generador/api/",
-        "method": "POST",
-        "headers": {
-          "Authorization": "Basic RklSTUFET1JWMzpzdXBlcjk4Nw==",
-          "Content-Type": "application/json"
-        },
-        "body": {
-          "noTramite": numeroTramite,
-          "documentos": [
-            {
-              "idDocumento": "documento1",
-              "nombreDocEntrada": "Contrato Oportunidad.pdf",
-              "nombreDocSalida": "signed_Contrato Oportunidad.pdf",
-              "pdfBase64": generarTexto.pdf.pdf_base64
-            }
-          ],
-          "firmantes": [
-            {
-              "cedula": formData.cedula,
-              "nombres": `${formData.primerNombre}  ${formData.segundoNombre}`,
-              "apellidos": `${formData.primerApellido}  ${formData.segundoApellido}`,
-              "correo": formData.email,
-              "provincia": formData.provincia,
-              "ciudad": formData.ciudad,
-              "direccion": formData.direccion,
-              "telefono": formData.telefono,
-              "firmas": {
-                "documento1": {
-                  "firma1": {
-                    "pagina": "1",
-                    "posX": "8",
-                    "posY": "8"
-                  }
-                }
-              }
-            }
-          ]
-        }
-      };
-
-      try {
-        // Esperar la respuesta de la API
-        const resp = await this.apiService.sendPostApiGenerica(requestBody);
-        //console.log("vercodigo",resp.codigo);
-        if (resp.codigo === "1") {
-          const data = {
-            "link": resp.linkPrimerFirmante,
-            "correo": formData.email
-          }
-
-          // Envio de correo
-          var envio = await this.apiService.envioLinkCorreo(data);
-          console.log(envio);
-          if (envio.statusCode == 202) {
-            this.isLoading = false;
-            this.alertService.showAlert('Correo enviado', 'success');
-            this.solicitudForm.reset(); // Reinicia los campos del formulario
-          }
-
-        }
-        else {
-          this.isLoading = false;
-          this.alertService.showAlert(envio.return, 'danger');
-        }
-      } catch (error) {
+  
+    try {
+      // Validar el formulario
+      if (!this.solicitudForm.valid) {
+        this.alertService.showAlert('El formulario no es válido', 'danger');
         this.isLoading = false;
-        this.alertService.showAlert("Tenemos un inconveniente, intentalo mas tarde", 'danger');
-        console.error('Error al llamar a la API:', error);
+        return;
       }
+  
+      const formData = this.solicitudForm.value;
+  
+      // Generar un nuevo número aleatorio en cada envío
+      this.randomTextNumber = this.generateRandomTextNumber();
+  
+      // Preparar datos del cliente (sin guardar aún)
+      const nombres = `${formData.primerNombre} ${formData.segundoNombre}`;
+      const apellidos = `${formData.primerApellido} ${formData.segundoApellido}`;
+  
+      // Generar PDF
+      const texto = {
+        nombres: nombres,
+        apellidos: apellidos,
+        cedula: formData.cedula,
+        empresa: localStorage.getItem('nombreEmpresa'),
+        correo: formData.email,
+        provincia: formData.provincia,
+        ciudad: formData.ciudad,
+        direccion: formData.direccion,
+        telefono: formData.telefono,
+      };
+  
+      const generarTextoResponse = await this.dashService.GenerarTexto(texto);
+      if (!generarTextoResponse.pdf || !generarTextoResponse.pdf.pdf_base64) {
+        throw new Error('No se pudo generar el PDF.');
+      }
+  
+      // Preparar el cuerpo para la API
+      const requestBody = {
+        url: 'https://enext.cloud/pre_equifax/links/generador/api/',
+        method: 'POST',
+        headers: {
+          Authorization: 'Basic RklSTUFET1JWMzpzdXBlcjk4Nw==',
+          'Content-Type': 'application/json',
+        },
+        body: {
+          noTramite: this.randomTextNumber, // Usamos el número aleatorio temporal
+          documentos: [
+            {
+              idDocumento: 'documento1',
+              nombreDocEntrada: 'Contrato Oportunidad.pdf',
+              nombreDocSalida: 'signed_Contrato Oportunidad.pdf',
+              pdfBase64: generarTextoResponse.pdf.pdf_base64,
+            },
+          ],
+          firmantes: [
+            {
+              cedula: formData.cedula,
+              nombres: nombres,
+              apellidos: apellidos,
+              correo: formData.email,
+              provincia: formData.provincia,
+              ciudad: formData.ciudad,
+              direccion: formData.direccion,
+              telefono: formData.telefono,
+              firmas: {
+                documento1: {
+                  firma1: {
+                    pagina: '1',
+                    posX: '8',
+                    posY: '8',
+                  },
+                },
+              },
+            },
+          ],
+        },
+      };
+  
+      // Enviar solicitud a la API
+      const apiResponse = await this.apiService.sendPostApiGenerica(requestBody);
+      if (apiResponse.codigo !== '1') {
+        throw new Error(apiResponse.return || 'Error en la respuesta de la API.');
+      }
+  
+      // Enviar correo
+      const correoData = {
+        link: apiResponse.linkPrimerFirmante,
+        correo: formData.email,
+      };
+      const envioCorreoResponse = await this.apiService.envioLinkCorreo(correoData);
+  
+      if (envioCorreoResponse.statusCode !== 202) {
+        throw new Error('No se pudo enviar el correo.');
+      }
+  
+      // Si todo es exitoso, guardar el cliente en la base de datos
+      const clienteResponse = await this.dashService.addCliente(
+        nombres,
+        apellidos,
+        formData.cedula,
+        this.randomTextNumber,
+        formData.email,
+        1
+      );
+  
+      if (!clienteResponse.data || !clienteResponse.data[0]) {
+        throw new Error('No se pudo registrar el cliente.');
+      } 
+  
+      // Éxito
+      this.alertService.showAlert('Correo enviado', 'success');
+      this.solicitudForm.reset(); // Reiniciar el formulario
+    } catch (error) {
+      console.error('Error en onSubmit:', error);
+      this.alertService.showAlert(
+        error.message || 'Tenemos un inconveniente, inténtalo más tarde.',
+        'danger'
+      );
+    } finally {
+      this.isLoading = false; // Asegurarse de desactivar el estado de carga
     }
   }
 
@@ -346,8 +357,8 @@ export class RequestSignatureComponent implements OnInit {
   getCorreoErrorMessage(control: AbstractControl | null): string {
     if (control?.hasError('required')) {
       return 'El correo es requerido.';
-    } else if (control?.hasError('email')) {
-      return 'La correo es invalido.';
+    } else if (control?.hasError('email')|| control?.hasError('invalidEmail')) {
+      return 'El correo es invalido.';
     }
     return '';
   }

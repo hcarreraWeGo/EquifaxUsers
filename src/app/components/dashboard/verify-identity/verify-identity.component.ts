@@ -3,6 +3,7 @@ import { Component, OnInit } from '@angular/core';
 import { AbstractControl, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { DashboardService } from '../dashboard.service';
 import { AlertServiceN } from '../../../shared/components/alert-n/alert.service';
+import { emailValidator } from '../../../shared/validators/email.validator';
 
 @Component({
   selector: 'app-verify-identity',
@@ -53,7 +54,8 @@ export class VerifyIdentityComponent implements OnInit {
       ], // Solo números, exactamente 10 dígitos
       email: ['', [
         Validators.required,
-        Validators.email
+        Validators.email,
+        emailValidator()
       ]
       ],// Validación de correo
       telefono: ['', [

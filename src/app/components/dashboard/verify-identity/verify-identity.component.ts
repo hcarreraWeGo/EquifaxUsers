@@ -69,7 +69,7 @@ export class VerifyIdentityComponent implements OnInit {
   }
 
   async onSubmit() {
-    this.isLoading = true;
+   
   
     if (!this.solicitudForm.valid) {
       this.alertService.showAlert("Formulario inválido", 'danger');
@@ -77,6 +77,7 @@ export class VerifyIdentityComponent implements OnInit {
     }
   
     try {
+      this.isLoading = true;
       // Generar número aleatorio
       this.randomTextNumber = this.generateRandomTextNumber();
       const formData = this.solicitudForm.value;
@@ -127,17 +128,15 @@ export class VerifyIdentityComponent implements OnInit {
       // Guardar cliente al final del proceso
       const clienteResp = await this.dashService.addCliente(nombres, apellidos, formData.cedula, this.randomTextNumber, formData.email, 2);
       if (clienteResp?.status === 201) {
-        this.alertService.showAlert("Correo enviado", 'success');
         this.solicitudForm.reset();
+        await this.alertService.showAlert("Correo enviado", 'success');
+        
       } else {
-        this.alertService.showAlert("Error al guardar al cliente", 'danger');
+        await this.alertService.showAlert("Error al guardar al cliente", 'danger');
         throw new Error("Error al guardar el cliente");
       }
-      
-      
-  
     } catch (error) {
-      this.alertService.showAlert("Tenemos un inconveniente, inténtalo más tarde", 'danger');
+      await this.alertService.showAlert("Tenemos un inconveniente, inténtalo más tarde", 'danger');
       console.error("Error en onSubmit:", error);
   
     } finally {

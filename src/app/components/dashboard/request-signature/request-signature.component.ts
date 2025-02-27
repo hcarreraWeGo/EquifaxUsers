@@ -187,25 +187,24 @@ export class RequestSignatureComponent implements OnInit {
   }
 
   async onSubmit() {
-    this.isLoading = true;
-  
     try {
+      this.isLoading = true;
       // Validar el formulario
       if (!this.solicitudForm.valid) {
         this.alertService.showAlert('El formulario no es válido', 'danger');
         this.isLoading = false;
         return;
       }
-  
+
       const formData = this.solicitudForm.value;
-  
+
       // Generar un nuevo número aleatorio en cada envío
       this.randomTextNumber = this.generateRandomTextNumber();
-  
+
       // Preparar datos del cliente (sin guardar aún)
       const nombres = `${formData.primerNombre} ${formData.segundoNombre}`;
       const apellidos = `${formData.primerApellido} ${formData.segundoApellido}`;
-  
+
       // Generar PDF
       const texto = {
         nombres: nombres,
@@ -218,12 +217,12 @@ export class RequestSignatureComponent implements OnInit {
         direccion: formData.direccion,
         telefono: formData.telefono,
       };
-  
+
       const generarTextoResponse = await this.dashService.GenerarTexto(texto);
       if (!generarTextoResponse.pdf || !generarTextoResponse.pdf.pdf_base64) {
         throw new Error('No se pudo generar el PDF.');
       }
-  
+
       // Preparar el cuerpo para la API
       const requestBody = {
         url: 'https://enext.cloud/pre_equifax/links/generador/api/',
@@ -265,24 +264,24 @@ export class RequestSignatureComponent implements OnInit {
           ],
         },
       };
-  
+
       // Enviar solicitud a la API
       const apiResponse = await this.apiService.sendPostApiGenerica(requestBody);
       if (apiResponse.codigo !== '1') {
         throw new Error(apiResponse.return || 'Error en la respuesta de la API.');
       }
-  
+
       // Enviar correo
       const correoData = {
         link: apiResponse.linkPrimerFirmante,
         correo: formData.email,
       };
       const envioCorreoResponse = await this.apiService.envioLinkCorreo(correoData);
-  
+
       if (envioCorreoResponse.statusCode !== 202) {
         throw new Error('No se pudo enviar el correo.');
       }
-  
+
       // Si todo es exitoso, guardar el cliente en la base de datos
       const clienteResponse = await this.dashService.addCliente(
         nombres,
@@ -292,26 +291,27 @@ export class RequestSignatureComponent implements OnInit {
         formData.email,
         1
       );
-  
+
       if (clienteResponse?.status === 201) {
+        this.solicitudForm.reset(); // Reiniciar el formulario
         // Éxito
-      this.alertService.showAlert('Correo enviado', 'success');
-      this.solicitudForm.reset(); // Reiniciar el formulario
+        await this.alertService.showAlert('Correo enviado', 'success');
+
       } else {
-        this.alertService.showAlert("Error al guardar al cliente", 'danger');
+        await this.alertService.showAlert("Error al guardar al cliente", 'danger');
         throw new Error("Error al guardar el cliente");
       }
-  
-      
+
+
     } catch (error) {
       console.error('Error en onSubmit:', error);
-      this.alertService.showAlert(
+      await this.alertService.showAlert(
         error.message || 'Tenemos un inconveniente, inténtalo más tarde.',
         'danger'
       );
-    } finally {
-      this.isLoading = false; // Asegurarse de desactivar el estado de carga
     }
+    
+    this.isLoading = false;
   }
 
   onProvinciaChange() {
@@ -360,7 +360,7 @@ export class RequestSignatureComponent implements OnInit {
   getCorreoErrorMessage(control: AbstractControl | null): string {
     if (control?.hasError('required')) {
       return 'El correo es requerido.';
-    } else if (control?.hasError('email')|| control?.hasError('invalidEmail')) {
+    } else if (control?.hasError('email') || control?.hasError('invalidEmail')) {
       return 'El correo es invalido.';
     }
     return '';

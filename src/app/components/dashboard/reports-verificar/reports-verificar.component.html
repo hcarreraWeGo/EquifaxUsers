@@ -57,7 +57,7 @@
                 <ngb-highlight [result]="cliente.correo" [term]="service.searchTerm"></ngb-highlight>
               </td>
               <td class="text-center">
-                <ngb-highlight [result]="cliente.createdAt | date: 'yyyy/MMM/dd'" [term]="service.searchTerm"></ngb-highlight>
+                <ngb-highlight [result]="cliente.createdAt | date: 'yyyy/MMM/dd HH:mm:ss'" [term]="service.searchTerm"></ngb-highlight>
               </td>
               <td class="d-flex align-items-center action-buttons" class="text-center">
                 <button class="btn btn-outline-primary btn-sm me-2" type="button" (click)="openDetail(cliente.numTramite,cliente.idProceso)">

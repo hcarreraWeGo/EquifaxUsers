@@ -68,9 +68,7 @@ export class ReportsVerificarComponent {
   }
   closeViewer() {
     this.showDetalle = false;
-    setTimeout(() => {
-      window.location.reload(); // Recarga la página
-    });
+    this.loadDataTable();
   }
   onSearch(): void {
     this.service.searchTerm = this.searchTerm; // Actualiza el término de búsqueda en el servicio

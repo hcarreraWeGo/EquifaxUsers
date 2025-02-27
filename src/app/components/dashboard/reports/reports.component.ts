@@ -4,6 +4,7 @@ import { TableService } from './../../../shared/services/table.service';
 import { Component, QueryList, ViewChildren } from '@angular/core';
 import { Observable, of } from 'rxjs';
 import { DashboardService } from '../dashboard.service';
+import { Router } from '@angular/router';
 
 
 @Component({
@@ -19,16 +20,17 @@ export class ReportsComponent {
   total$: Observable<number> = of(0);
   @ViewChildren(NgbdSortableHeader) headers: QueryList<NgbdSortableHeader>;
   // abrir detalle
-  showDetalle: boolean = false; 
+  showDetalle: boolean = false;
   selectedTramite: any;
   selectedProceso: any;
   constructor(
     private sliderbarService: SliderService,
     private dashService: DashboardService,
     public service: TableService,
+    public router: Router,
 
   ) {
-    
+
   }
 
   async ngOnInit(): Promise<void> {
@@ -61,18 +63,17 @@ export class ReportsComponent {
     // console.log('Page size cambiado a:', newPageSize);
     this.loadDataTable(); // Recargar datos si es necesario para actualizar la vista
   }
-  
-  async openDetail(documentId,proceso) {
+
+  async openDetail(documentId, proceso) {
     // console.log(documentId);
     this.selectedTramite = documentId;
-    this.selectedProceso=proceso;
+    this.selectedProceso = proceso;
     this.showDetalle = true;
   }
   closeViewer() {
     this.showDetalle = false;
-    setTimeout(() => {
-      window.location.reload(); // Recarga la página
-    });
+    // Pequeño delay para asegurarse de que el componente se destruya antes de volver a cargarlo
+    this.loadDataTable();
   }
 
   onSearch(): void {
